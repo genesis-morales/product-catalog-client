@@ -1,0 +1,98 @@
+/* Products.css */
+
+.products-container {
+  width: 100%;
+}
+
+/* Encabezado */
+.products-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  margin-bottom: 24px;
+  gap: 24px;
+}
+
+.products-title {
+  font-size: 32px;
+  font-weight: bold;
+  margin: 0 0 8px 0;
+}
+
+.products-subtitle {
+  color: #666;
+  margin: 0;
+  font-size: 14px;
+}
+
+.btn-add-product {
+  height: 40px;
+  white-space: nowrap;
+}
+
+/* Filtros */
+.products-filters {
+  display: flex;
+  gap: 12px;
+  margin-bottom: 16px;
+  flex-wrap: wrap;
+}
+
+.filter-search {
+  flex: 1;
+  max-width: 400px;
+  min-width: 200px;
+}
+
+.filter-select {
+  width: 200px;
+}
+
+/* Tabla */
+.products-table {
+  background: white;
+  border-radius: 4px;
+}
+
+.product-image {
+  width: 40px;
+  height: 40px;
+  object-fit: cover;
+  border-radius: 4px;
+}
+
+/* Responsive */
+@media (max-width: 768px) {
+  .products-header {
+    flex-direction: column;
+    align-items: stretch;
+  }
+
+  .btn-add-product {
+    width: 100%;
+  }
+
+  .products-filters {
+    flex-direction: column;
+  }
+
+  .filter-search,
+  .filter-select {
+    width: 100%;
+    max-width: 100%;
+  }
+}
+
+@media (max-width: 480px) {
+  .products-title {
+    font-size: 24px;
+  }
+
+  .products-subtitle {
+    font-size: 12px;
+  }
+
+  .products-table {
+    font-size: 12px;
+  }
+}
