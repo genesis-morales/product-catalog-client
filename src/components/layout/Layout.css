@@ -171,3 +171,53 @@ body,
 .app-container {
   animation: fadeIn 0.3s ease-in;
 }
+
+.sider-bottom {
+  margin-top: auto;
+  padding: 16px;
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.sider-view-store {
+  width: 100%;
+  padding: 10px 12px;
+  border-radius: 999px;
+  border: none;
+  background: #1677ff;
+  color: #fff;
+  font-weight: 500;
+  cursor: pointer;
+}
+
+.sider-view-store:hover {
+  background: #1659c4;
+}
+
+.sider-bottom-links {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.sider-link {
+  background: transparent;
+  border: none;
+  color: #bfbfbf;
+  text-align: left;
+  padding: 0;
+  cursor: pointer;
+  font-size: 14px;
+}
+
+.sider-link:hover {
+  color: #ffffff;
+}
+
+/* Para que el contenido principal del sider use flex y empuje el bloque inferior */
+.app-sider .ant-layout-sider-children {
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+}

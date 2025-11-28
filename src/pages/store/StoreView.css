@@ -1,0 +1,178 @@
+.store-page {
+  min-height: 100vh;
+  background: #f5f7fb;
+  padding: 8px 16px 16px;
+  box-sizing: border-box;
+  margin: 0;           /* asegúrate de que no haya margen */
+}
+
+.store-page .app-container {
+  padding-top: 0;
+}
+
+/* Top bar */
+.store-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  background: #ffffff;
+  border-radius: 12px;
+  padding: 6px 20px;
+  margin: 0 0 12px 0;   /* arriba 0 */
+  box-shadow: 0 4px 12px rgba(15, 23, 42, 0.06);
+}
+
+.store-logo {
+  font-weight: 700;
+  font-size: 18px;
+}
+
+.store-search {
+  max-width: 480px;
+  flex: 1;
+  margin: 0 24px;
+}
+
+.store-header-actions {
+  display: flex;
+  gap: 12px;
+}
+
+/* Layout principal */
+.store-main {
+  padding: 0 16px 16px;    /* solo laterales y abajo */
+  display: grid;
+  grid-template-columns: 260px 1fr;
+  gap: 16px;
+}
+
+/* Filtros */
+.store-filters {
+  background: #ffffff;
+  border-radius: 12px;
+  padding: 16px;
+  box-shadow: 0 4px 12px rgba(15, 23, 42, 0.04);
+}
+
+.store-filters-title {
+  margin-bottom: 16px;
+}
+
+.store-filter-block {
+  margin-bottom: 20px;
+}
+
+.store-filter-block h4 {
+  font-size: 14px;
+  margin-bottom: 8px;
+}
+
+.store-filter-tag {
+  display: block;
+  margin-bottom: 8px;
+  border-radius: 999px;
+  background: #f5f7ff;
+  border: none;
+}
+
+/* Rango de precios */
+.store-price-labels {
+  display: flex;
+  justify-content: space-between;
+  font-size: 12px;
+  margin-top: 4px;
+}
+
+/* Contenido productos */
+.store-content {
+  background: #ffffff;
+  border-radius: 12px;
+  padding: 16px 20px 24px;
+  box-shadow: 0 4px 12px rgba(15, 23, 42, 0.04);
+}
+
+.store-list-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 16px;
+}
+
+.store-order {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-size: 14px;
+}
+
+/* Grid de tarjetas */
+.store-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
+  gap: 16px;
+}
+
+.store-card {
+  background: #f9fafb;
+  border-radius: 16px;
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+  box-shadow: 0 2px 10px rgba(15, 23, 42, 0.04);
+}
+
+.store-card-image img {
+  width: 100%;
+  height: 170px;
+  object-fit: cover;
+}
+
+.store-card-body {
+  padding: 12px 14px 14px;
+}
+
+.store-card-desc {
+  font-size: 13px;
+  color: #6b7280;
+  margin: 4px 0 8px;
+}
+
+.store-card-footer {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.store-card-price {
+  color: #1677ff;
+  font-weight: 600;
+}
+/* Quita el padding/margen que viene del layout admin */
+.store-wrapper {
+  width: 100%;
+  height: 100%;
+}
+
+.store-wrapper .app-container {
+  padding: 0 !important;
+  margin: 0 !important;
+}
+
+/* Responsivo */
+@media (max-width: 992px) {
+  .store-main {
+    grid-template-columns: 1fr;
+  }
+
+  .store-filters {
+    order: 2;
+  }
+
+  .store-content {
+    order: 1;
+  }
+
+  .store-search {
+    margin: 0 12px;
+  }
+}

@@ -65,7 +65,34 @@ const AppLayout: React.FC = () => {
           selectedKeys={[location.pathname]} 
           items={items} 
         />
+        {/* Botones inferiores */}
+  <div className="sider-bottom">
+    <button
+      className="sider-view-store"
+      onClick={() => navigate('/store')}
+    >
+      View Store
+    </button>
+
+    <div className="sider-bottom-links">
+      <button
+        className="sider-link"
+        onClick={() => navigate('/settings')}
+      >
+        Settings
+      </button>
+      <button
+        className="sider-link"
+        onClick={() => {
+          // aquí iría tu lógica de logout real
+          navigate('/login');
+        }}
+      >
+      </button>
+      </div>
+      </div>
       </Sider>
+
       <Layout className="app-inner-layout">
         <Header className="app-header" style={{ background: colorBgContainer }} />
         <Content className="app-content">

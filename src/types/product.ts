@@ -25,6 +25,5 @@ export interface Product {
   subcategory_id: number;
   created_at: string;
   updated_at: string;
-  // Relaciones opcionales (cuando incluyas datos relacionados)
   subcategory?: Subcategory;
 }

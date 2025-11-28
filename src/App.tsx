@@ -6,28 +6,23 @@ import Dashboard from './pages/admin/Dashboard';
 import Products from './pages/admin/products/Products';
 import Orders from './pages/admin/Orders';
 import Customers from './pages/admin/Customers';
-
-// Public pages
-import ViewStore from './pages/public/ViewStore';
-import ProductDetail from './pages/public/ProductDetail';
+import StoreView from './pages/store/StoreView';
 
 function App() {
   return (
     <BrowserRouter>
       <Routes>
+        {/* Rutas de admin con layout */}
         <Route path="/" element={<AppLayout />}>
-          {/* Admin routes */}
-          <Route index element={<Navigate to="/dashboard" replace />} />
-          <Route path="dashboard" element={<Dashboard />} />
-          <Route path="products" element={<Products />} />
-          <Route path="orders" element={<Orders />} />
-          <Route path="customers" element={<Customers />} />
-          
-          {/* Public routes */}
-          <Route path="store" element={<ViewStore />} />
-          <Route path="store/:id" element={<ProductDetail />} />
-        </Route>
-      </Routes>
+          <Route path="/dashboard" element={<Dashboard />} />
+          <Route path="/products" element={<Products />} />
+          <Route path="/orders" element={<Orders />} />
+          <Route path="/customers" element={<Customers />} />
+  </Route>
+
+  {/* Ruta pública de la tienda SIN AppLayout */}
+  <Route path="/store" element={<StoreView />} />
+</Routes>
     </BrowserRouter>
   );
 }
