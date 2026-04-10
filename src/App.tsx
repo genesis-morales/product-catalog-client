@@ -1,28 +1,30 @@
-import { BrowserRouter, Routes, Route, Navigate } from 'react-router-dom';
+import { Suspense, lazy } from 'react';
+import { BrowserRouter, Route, Routes } from 'react-router-dom';
 import AppLayout from './components/layout/Layout';
 
-// Admin pages
-import Dashboard from './pages/admin/Dashboard';
-import Products from './pages/admin/products/Products';
-import Orders from './pages/admin/Orders';
-import Customers from './pages/admin/Customers';
-import StoreView from './pages/store/StoreView';
+const Dashboard = lazy(() => import('./pages/admin/Dashboard'));
+const ProductManagement = lazy(() => import('./features/products/components/ProductManagement').then(module => ({ default: module.ProductManagement })));
+const Orders = lazy(() => import('./pages/admin/Orders'));
+const Customers = lazy(() => import('./pages/admin/Customers'));
+const StoreView = lazy(() => import('./pages/store/StoreView').then(module => ({ default: module.StoreView })));
 
 function App() {
   return (
     <BrowserRouter>
-      <Routes>
-        {/* Rutas de admin con layout */}
-        <Route path="/" element={<AppLayout />}>
-          <Route path="/dashboard" element={<Dashboard />} />
-          <Route path="/products" element={<Products />} />
-          <Route path="/orders" element={<Orders />} />
-          <Route path="/customers" element={<Customers />} />
-  </Route>
+      <Suspense fallback={<div>Cargando...</div>}>
+        <Routes>
+          {/* Rutas de admin con layout */}
+          <Route path="/" element={<AppLayout />}>
+            <Route path="/dashboard" element={<Dashboard />} />
+            <Route path="/products" element={<ProductManagement />} />
+            <Route path="/orders" element={<Orders />} />
+            <Route path="/customers" element={<Customers />} />
+          </Route>
 
-  {/* Ruta pública de la tienda SIN AppLayout */}
-  <Route path="/store" element={<StoreView />} />
-</Routes>
+          {/* Ruta pública de la tienda SIN AppLayout */}
+          <Route path="/store" element={<StoreView />} />
+        </Routes>
+      </Suspense>
     </BrowserRouter>
   );
 }
