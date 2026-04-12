@@ -1,5 +1,7 @@
 import { Alert } from 'antd';
-import React from 'react';
+import React, { useEffect, useState } from 'react';
+import { ProductService } from '../../../products/services/productService';
+import type { Category } from '../../../products/types/product';
 import { useStoreProducts } from '../../hooks/useStoreProducts';
 import { StoreCard } from '../StoreCard/StoreCard';
 import { StoreFilters } from '../StoreFilters/StoreFilters';
@@ -12,10 +14,18 @@ export const StoreView: React.FC = () => {
     setSearch, setPriceRange, setSort, loadProducts,
   } = useStoreProducts();
 
+  const [categories, setCategories] = useState<Category[]>([]);
+  const [selectedCategory, setSelectedCategory] = useState<number | undefined>();
+
+  useEffect(() => {
+    ProductService.getCategories().then(setCategories).catch(console.error);
+  }, []);
+
   const handleClear = () => {
     setSearch('');
     setPriceRange([0, 3000]);
     setSort('relevance');
+    setSelectedCategory(undefined);
     void loadProducts();
   };
 
@@ -64,15 +74,25 @@ export const StoreView: React.FC = () => {
             search={search}
             priceRange={priceRange}
             sort={sort}
+            categories={categories}
+            selectedCategory={selectedCategory}
             onSearchChange={setSearch}
             onPriceRangeChange={setPriceRange}
             onSortChange={setSort}
+            onCategoryChange={setSelectedCategory}
             onClear={handleClear}
           />
         </aside>
 
         <main className="store-content">
-          {error && <Alert type="error" message="Error cargando productos" description={error} style={{ marginBottom: 16 }} />}
+          {error && (
+            <Alert
+              type="error"
+              message="Error cargando productos"
+              description={error}
+              style={{ marginBottom: 16 }}
+            />
+          )}
 
           <div className="store-content__toolbar">
             <p className="store-content__count">

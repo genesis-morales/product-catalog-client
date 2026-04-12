@@ -1,19 +1,28 @@
 import React from 'react';
 import type { StoreSortOption } from '../../hooks/useStoreProducts';
+import type { Category } from '../../../products/types/product';
 import './StoreFilters.scss';
 
 interface StoreFiltersProps {
   search: string;
   priceRange: [number, number];
   sort: StoreSortOption;
+  categories: Category[];           
+  selectedCategory?: number;       
   onSearchChange: (value: string) => void;
   onPriceRangeChange: (value: [number, number]) => void;
   onSortChange: (value: StoreSortOption) => void;
+  onCategoryChange: (id?: number) => void; 
   onClear: () => void;
 }
 
 export const StoreFilters: React.FC<StoreFiltersProps> = ({
-  priceRange, onPriceRangeChange, onClear,
+  priceRange,
+  onPriceRangeChange,
+  onClear,
+  categories,
+  selectedCategory,
+  onCategoryChange,
 }) => {
   const MIN = 0;
   const MAX = 3000;
@@ -38,6 +47,29 @@ export const StoreFilters: React.FC<StoreFiltersProps> = ({
         <button className="filters__clear" onClick={onClear}>Limpiar</button>
       </div>
 
+      {/* ── Categorías ── */}
+      <div className="filters__section">
+        <h4 className="filters__label">Categorías</h4>
+        <ul className="filters__categories">
+          <li
+            className={`filters__category-item ${!selectedCategory ? 'active' : ''}`}
+            onClick={() => onCategoryChange(undefined)}
+          >
+            Todas
+          </li>
+          {categories.map((cat) => (
+            <li
+              key={cat.id}
+              className={`filters__category-item ${selectedCategory === cat.id ? 'active' : ''}`}
+              onClick={() => onCategoryChange(cat.id)}
+            >
+              {cat.name}
+            </li>
+          ))}
+        </ul>
+      </div>
+
+      {/* ── Rango de precios ── */}
       <div className="filters__section">
         <h4 className="filters__label">Rango de Precios</h4>
         <div className="filters__range">
@@ -48,7 +80,7 @@ export const StoreFilters: React.FC<StoreFiltersProps> = ({
                 #e5e7eb ${minPct}%,
                 #2563eb ${minPct}%,
                 #2563eb ${maxPct}%,
-                #e5e7eb ${maxPct}%)`
+                #e5e7eb ${maxPct}%)`,
             }}
           >
             <input

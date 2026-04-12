@@ -90,21 +90,25 @@
 }
 
 .store-layout {
+  display: flex;
+  align-items: flex-start;
+  gap: 24px;
+  padding: 24px;
   max-width: 1280px;
   margin: 0 auto;
-  padding: 24px 24px 48px;
-  display: grid;
-  grid-template-columns: 220px 1fr;
-  gap: 24px;
-  align-items: start;
 }
 
 .store-sidebar {
+  width: 260px;
+  flex-shrink: 0;
   position: sticky;
-  top: 88px;
+  top: 88px;          
+  margin-top: 0;
 }
 
 .store-content {
+  flex: 1;            
+  min-width: 0;
   &__toolbar {
     display: flex;
     align-items: center;
@@ -144,7 +148,7 @@
 
 .store-grid {
   display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(240px, 1fr));
+  grid-template-columns: repeat(3, 1fr);
   gap: 20px;
 }
 
@@ -197,10 +201,29 @@
   }
 }
 
+// ── Responsive ─────────────────────────────────────────
+@media (max-width: 1024px) {
+  .store-grid {
+    grid-template-columns: repeat(2, 1fr);  // ← tablet: 2 columnas
+  }
+}
+
 @media (max-width: 768px) {
   .store-layout {
-    grid-template-columns: 1fr;
+    flex-direction: column;                 // ← mobile: sidebar arriba
     padding: 16px;
   }
-  .store-sidebar { position: static; }
+  .store-sidebar {
+    position: static;
+    width: 100%;
+  }
+  .store-grid {
+    grid-template-columns: repeat(2, 1fr); // ← mobile: 2 columnas
+  }
+}
+
+@media (max-width: 480px) {
+  .store-grid {
+    grid-template-columns: 1fr;            // ← móvil pequeño: 1 columna
+  }
 }

@@ -1,0 +1,289 @@
+*, *::before, *::after {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+html, body, #root {
+  width: 100%;
+  height: 100%;
+}
+
+// ── Layout principal ───────────────────────────────────
+.app-layout {
+  display: flex;
+  min-height: 100vh;
+  width: 100%;
+}
+
+.app-inner-layout {
+  display: flex;
+  flex-direction: column;
+  flex: 1;
+  min-width: 0;
+  background: #f5f6fa;
+}
+
+// ── Sidebar ────────────────────────────────────────────
+.app-sider {
+  background: #0f172a !important;
+  min-height: 100vh !important;
+  position: sticky !important;
+  top: 0;
+  height: 100vh;
+  overflow-y: auto;
+  flex-shrink: 0;
+
+  .ant-layout-sider-children {
+    display: flex;
+    flex-direction: column;
+    height: 100%;
+    min-height: 100vh;
+  }
+}
+
+// ── Usuario ────────────────────────────────────────────
+.sider-user {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 20px 16px;
+  border-bottom: none;
+  flex-shrink: 0;
+  cursor: pointer;
+  transition: background 0.15s;
+
+  &:hover { background: rgba(255, 255, 255, 0.04); }
+
+  &__avatar {
+    width: 36px;
+    height: 36px;
+    border-radius: 50%;
+    background: #1677ff;
+    color: #fff;
+    font-size: 14px;
+    font-weight: 700;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-shrink: 0;
+  }
+
+  &__info {
+    display: flex;
+    flex-direction: column;
+    min-width: 0;
+  }
+
+  &__name {
+    font-size: 13px;
+    font-weight: 600;
+    color: #e2e8f0;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+  }
+
+  &__email {
+    font-size: 11px;
+    color: #64748b;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+  }
+}
+
+// ── Menu ───────────────────────────────────────────────
+.app-sider .ant-menu {
+  background: transparent !important;
+  border: none !important;
+  padding: 12px 8px !important;
+  margin-top: 8px;
+}
+
+.app-sider .ant-menu-item {
+  border-radius: 8px !important;
+  margin-bottom: 2px !important;
+  font-size: 14px;
+  color: #94a3b8 !important;
+  height: 42px !important;
+  line-height: 42px !important;
+}
+
+.app-sider .ant-menu-item:hover {
+  background: rgba(255, 255, 255, 0.07) !important;
+  color: #fff !important;
+}
+
+.app-sider .ant-menu-item-selected {
+  background: rgba(22, 119, 255, 0.2) !important;
+  color: #60a5fa !important;
+}
+
+.app-sider .ant-menu-item .anticon {
+  font-size: 16px !important;
+  opacity: 1 !important;
+}
+
+.app-sider .ant-menu-item:hover .anticon { color: #fff !important; }
+.app-sider .ant-menu-item-selected .anticon { color: #60a5fa !important; }
+
+// ── Sider bottom ───────────────────────────────────────
+.sider-bottom {
+  margin-top: auto;
+  padding: 12px 16px 20px;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  flex-shrink: 0;
+}
+
+.sider-link {
+  background: transparent;
+  border: none;
+  color: #64748b;
+  text-align: left;
+  padding: 8px;
+  border-radius: 6px;
+  cursor: pointer;
+  font-size: 13px;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  width: 100%;
+  transition: background 0.15s, color 0.15s;
+
+  .anticon { font-size: 15px; }
+
+  &:hover {
+    background: rgba(255, 255, 255, 0.05);
+    color: #cbd5e1;
+  }
+}
+
+.sider-view-store {
+  width: 100%;
+  padding: 9px 12px;
+  border-radius: 8px;
+  border: none;
+  background: #1677ff;
+  color: #fff;
+  font-size: 13px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: background 0.15s, transform 0.1s;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 6px;
+
+  &:hover  { background: #1554d4; }
+  &:active { transform: scale(0.97); }
+}
+
+// ── Header ─────────────────────────────────────────────
+.app-header {
+  padding: 0 24px !important;
+  background: #f5f6fa !important;
+  border-bottom: none;
+  box-shadow: none;
+  height: 60px !important;
+  line-height: 60px !important;
+  display: flex;
+  align-items: center;
+  flex-shrink: 0;
+
+  &__menu-btn {
+    display: none;
+    background: none;
+    border: none;
+    cursor: pointer;
+    color: #374151;
+    padding: 4px;
+    border-radius: 6px;
+
+    &:hover { background: #e5e7eb; }
+  }
+}
+
+// ── Content ────────────────────────────────────────────
+.app-content {
+  flex: 1;
+  overflow: auto;
+  padding: 0 !important;
+
+  &::-webkit-scrollbar       { width: 6px; }
+  &::-webkit-scrollbar-track { background: transparent; }
+  &::-webkit-scrollbar-thumb { background: #d1d5db; border-radius: 99px; }
+  &::-webkit-scrollbar-thumb:hover { background: #9ca3af; }
+}
+
+.app-container {
+  background: #f5f6fa;
+  border-radius: 0;
+  box-shadow: none;
+  padding: 24px;
+  min-height: 100%;
+  animation: fadeIn 0.2s ease-out;
+}
+
+// ── Footer ─────────────────────────────────────────────
+.app-footer {
+  background: #f5f6fa;
+  border-top: none;
+  text-align: center;
+  padding: 14px 24px;
+  font-size: 13px;
+  color: #9ca3af;
+  flex-shrink: 0;
+}
+
+// ── Animación ──────────────────────────────────────────
+@keyframes fadeIn {
+  from { opacity: 0; transform: translateY(4px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+
+// ── Overlay móvil ──────────────────────────────────────
+.sider-overlay {
+  display: none;
+  position: fixed;
+  inset: 0;
+  background: rgba(0, 0, 0, 0.5);
+  z-index: 99;
+}
+
+// ── Responsive ─────────────────────────────────────────
+@media (max-width: 992px) {
+  .app-content    { padding: 0 !important; }
+  .app-container  { padding: 16px; }
+}
+
+@media (max-width: 768px) {
+  .app-sider {
+    position: fixed !important;
+    left: -250px !important;
+    top: 0 !important;
+    z-index: 100;
+    height: 100vh !important;
+    transition: left 0.25s cubic-bezier(0.4, 0, 0.2, 1) !important;
+
+    &.open { left: 0 !important; }
+  }
+
+  .sider-overlay {
+    display: block;
+    &.hidden { display: none; }
+  }
+
+  .app-header {
+    padding: 0 16px !important;
+    &__menu-btn { display: flex !important; }
+  }
+
+  .app-container { padding: 12px; }
+}
+
+@media (max-width: 480px) {
+  .app-container { padding: 10px; }
+}
