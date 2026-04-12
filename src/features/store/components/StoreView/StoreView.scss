@@ -204,13 +204,13 @@
 // ── Responsive ─────────────────────────────────────────
 @media (max-width: 1024px) {
   .store-grid {
-    grid-template-columns: repeat(2, 1fr);  // ← tablet: 2 columnas
+    grid-template-columns: repeat(2, 1fr);
   }
 }
 
 @media (max-width: 768px) {
   .store-layout {
-    flex-direction: column;                 // ← mobile: sidebar arriba
+    flex-direction: column;
     padding: 16px;
   }
   .store-sidebar {
@@ -218,12 +218,12 @@
     width: 100%;
   }
   .store-grid {
-    grid-template-columns: repeat(2, 1fr); // ← mobile: 2 columnas
+    grid-template-columns: repeat(2, 1fr);
   }
 }
 
 @media (max-width: 480px) {
   .store-grid {
-    grid-template-columns: 1fr;            // ← móvil pequeño: 1 columna
+    grid-template-columns: 1fr;
   }
 }
