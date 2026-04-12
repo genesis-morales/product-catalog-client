@@ -14,26 +14,16 @@ interface ProductFormProps {
   fileList: any[];
   loading: boolean;
   onCategoryChange: (categoryId: number) => void;
-  onUploadChange: (info: any) => void;
   onRemoveImage: () => void;
+  onUpload: (file: File) => Promise<void>;
 }
 
 export const ProductForm: React.FC<ProductFormProps> = ({
-  form,
-  editingProduct,
-  categories,
-  filteredSubcategories,
-  imageUrl,
-  fileList,
-  loading,
-  onCategoryChange,
-  onUploadChange,
-  onRemoveImage,
+  form, editingProduct, categories, filteredSubcategories, 
+  imageUrl, fileList, loading, onCategoryChange, onUpload, onRemoveImage,
 }) => {
-  // Efecto para inicializar el formulario cuando se edita un producto
   useEffect(() => {
     if (editingProduct) {
-      // Si viene la relación subcategory.category desde el backend:
       if (editingProduct.subcategory?.category_id) {
         form.setFieldsValue({
           ...editingProduct,
@@ -44,12 +34,11 @@ export const ProductForm: React.FC<ProductFormProps> = ({
         form.setFieldsValue(editingProduct);
       }
 
-      // Configurar imagen si existe
       if (editingProduct.img) {
-        // Aquí se manejaría la configuración inicial de la imagen
+        
       }
     }
-  }, [editingProduct, form, onCategoryChange]);
+  }, [editingProduct]);
 
   return (
     <>
@@ -149,11 +138,12 @@ export const ProductForm: React.FC<ProductFormProps> = ({
 
       <Divider orientation="left">Imágenes del Producto</Divider>
 
+
       <Upload
         listType="picture-card"
         fileList={fileList}
         beforeUpload={(file) => {
-          onUploadChange({ file });
+          onUpload(file);
           return false;
         }}
         onRemove={onRemoveImage}

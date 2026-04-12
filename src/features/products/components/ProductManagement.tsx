@@ -23,18 +23,8 @@ export const ProductManagement: React.FC = () => {
   const { products, loading, total, currentPage, pageSize, loadProducts, refetch } = useProducts();
   const { categories, subcategories } = useCategories();
   const { filters, filteredProducts, setSearch, setCategoryId, setAvailable, clearFilters } = useProductFilters(products);
-  const {
-    imageUrl,
-    fileList,
-    filteredSubcategories,
-    handleCategoryChange,
-    handleUpload,
-    handleSave,
-    handleRemoveImage,
-    setInitialImage,
-    resetForm,
-    loading: formLoading,
-  } = useProductForm();
+  const { imageUrl, fileList, filteredSubcategories, handleCategoryChange, handleUpload, handleSave, handleRemoveImage,
+    setInitialImage, resetForm, loading: formLoading, } = useProductForm();
 
   // Handlers
   const handleAddProduct = useCallback(() => {
@@ -99,13 +89,6 @@ export const ProductManagement: React.FC = () => {
   const handleCategoryChangeWrapper = useCallback((categoryId: number) => {
     handleCategoryChange(categoryId, subcategories);
   }, [handleCategoryChange, subcategories]);
-
-  const handleUploadChange = useCallback(async (info: any) => {
-    const { file } = info;
-    if (file.originFileObj) {
-      await handleUpload(file.originFileObj);
-    }
-  }, [handleUpload]);
 
   const handlePaginationChange = useCallback((page: number, size: number) => {
     loadProducts(page, size);
@@ -173,8 +156,8 @@ export const ProductManagement: React.FC = () => {
             imageUrl={imageUrl}
             fileList={fileList}
             loading={formLoading}
-            onCategoryChange={handleCategoryChangeWrapper}
-            onUploadChange={handleUploadChange}
+            onCategoryChange={(id) => handleCategoryChange(id, subcategories)}
+            onUpload={handleUpload}
             onRemoveImage={handleRemoveImage}
           />
         </Form>

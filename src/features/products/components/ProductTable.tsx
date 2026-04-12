@@ -38,7 +38,7 @@ export const ProductTable: React.FC<ProductTableProps> = ({
       width: '30%',
       render: (text: string, record: Product) => (
         <Space>
-          {record.img && (
+          {record.img ? (
             <Image
               src={record.img}
               alt={text}
@@ -47,27 +47,24 @@ export const ProductTable: React.FC<ProductTableProps> = ({
               style={{ objectFit: 'cover', borderRadius: 4 }}
               placeholder={<div style={{ width: 40, height: 40, background: '#f0f0f0' }} />}
             />
+          ) : (
+            <div style={{
+              width: 40,
+              height: 40,
+              background: '#f0f0f0',
+              borderRadius: 4,
+              display: 'flex',
+              alignItems: 'center',
+              justifyContent: 'center',
+              color: '#bbb',
+              fontSize: 10,
+            }}>
+              N/A
+            </div>
           )}
           <span>{text}</span>
         </Space>
       ),
-    },
-    {
-      title: 'PRECIO',
-      dataIndex: 'price',
-      key: 'price',
-      sorter: (a: Product, b: Product) => a.price - b.price,
-      render: (price: number) => `$${price.toFixed(2)}`,
-    },
-    {
-      title: 'STOCK',
-      dataIndex: 'stock',
-      key: 'stock',
-      sorter: (a: Product, b: Product) => a.stock - b.stock,
-      render: (stock: number) => {
-        const status = getStockStatus(stock);
-        return <Badge color={status.color} text={status.text} />;
-      },
     },
     {
       title: 'CATEGORÍA',
@@ -92,14 +89,21 @@ export const ProductTable: React.FC<ProductTableProps> = ({
       },
     },
     {
-      title: 'DISPONIBLE',
-      dataIndex: 'available',
-      key: 'available',
-      render: (available: boolean) => (
-        <Tag color={available ? 'green' : 'red'}>
-          {available ? 'Sí' : 'No'}
-        </Tag>
-      ),
+      title: 'PRECIO',
+      dataIndex: 'price',
+      key: 'price',
+      sorter: (a: Product, b: Product) => a.price - b.price,
+      render: (price: number) => `$${price.toFixed(2)}`,
+    },
+    {
+      title: 'STOCK',
+      dataIndex: 'stock',
+      key: 'stock',
+      sorter: (a: Product, b: Product) => a.stock - b.stock,
+      render: (stock: number) => {
+        const status = getStockStatus(stock);
+        return <Badge color={status.color} text={status.text} />;
+      },
     },
     {
       title: 'ACCIONES',
