@@ -1,5 +1,6 @@
 import React, { createContext, useCallback, useContext, useEffect, useState } from 'react';
 import { CartService } from '../services/cartService';
+import { setCartToken } from '../../../services/api';
 import type { Cart } from '../types/cart';
 
 interface CartContextType {
@@ -25,6 +26,7 @@ export const CartProvider: React.FC<{ children: React.ReactNode }> = ({ children
     try {
       const data = await CartService.getCart();
       setCart(data);
+      if (data.guest_token) setCartToken(data.guest_token); // ← aquí
     } catch (err) {
       console.error('Error cargando carrito:', err);
     }
@@ -39,6 +41,7 @@ export const CartProvider: React.FC<{ children: React.ReactNode }> = ({ children
     try {
       const data = await CartService.addItem(productId, quantity);
       setCart(data);
+      if (data.guest_token) setCartToken(data.guest_token); // ← aquí también
       setIsOpen(true);
     } finally {
       setLoading(false);
@@ -58,8 +61,8 @@ export const CartProvider: React.FC<{ children: React.ReactNode }> = ({ children
   const removeItem = async (itemId: number) => {
     setLoading(true);
     try {
-      await CartService.removeItem(itemId);
-      await fetchCart(); // recarga el carrito tras eliminar
+      const data = await CartService.removeItem(itemId);
+      setCart(data);
     } finally {
       setLoading(false);
     }

@@ -16,6 +16,7 @@ export interface CartItem {
 
 export interface Cart {
   id: number;
+  guest_token: string | null;
   items: CartItem[];
   subtotal: number;
   total: number;

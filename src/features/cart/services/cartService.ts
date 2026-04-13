@@ -17,7 +17,8 @@ export class CartService {
     return response.data;
   }
 
-  static async removeItem(itemId: number): Promise<void> {
-    await api.delete(`/cart/items/${itemId}`);
+  static async removeItem(itemId: number): Promise<Cart> {
+  const response = await api.delete(`/cart/items/${itemId}`);
+  return response.data;
   }
 }
