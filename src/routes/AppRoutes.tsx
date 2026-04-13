@@ -8,6 +8,7 @@ const ProductManagement = lazy(() => import('../features/products/components/Pro
 const Orders            = lazy(() => import('../pages/admin/Orders'));
 const Customers         = lazy(() => import('../pages/admin/Customers'));
 const StorePage         = lazy(() => import('../pages/store/StorePage'));
+const ProductDetailPage = lazy(() => import('../pages/store/ProductDetailPage'));
 
 export const AppRoutes = () => (
   <Suspense fallback={<div>Cargando...</div>}>
@@ -24,6 +25,7 @@ export const AppRoutes = () => (
       {/* Tienda */}
       <Route path="/store" element={<StoreLayout />}>
         <Route index element={<StorePage />} />
+        <Route path=":id" element={<ProductDetailPage />} />
       </Route>
 
     </Routes>

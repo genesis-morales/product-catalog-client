@@ -1,18 +1,15 @@
-body {
-  margin: 0;
-  min-width: 320px;
-  min-height: 100vh;
-  background-color: #f5f7fb; /* o el color que quieras de fondo global */
-  display: block;            /* quitar el flex que centra todo */
-}
-
 :root {
-  font-family: system-ui, Avenir, Helvetica, Arial, sans-serif;
+  font-family: 'General Sans', -apple-system, Helvetica, sans-serif;
   line-height: 1.5;
   font-weight: 400;
   color: #213547;
-  background-color: #ffffff;
   text-rendering: optimizeLegibility;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
+}
+
+body {
+  margin: 0;
+  min-height: 100vh;
+  background-color: #f5f7fb;
 }

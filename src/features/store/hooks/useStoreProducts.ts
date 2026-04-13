@@ -1,16 +1,18 @@
 import { useCallback, useEffect, useMemo, useState } from 'react';
 import type { Product } from '../../products/types/product';
 import { StoreService } from '../services/storeService';
+import { useStoreContext } from '../context/StoreContext';
 
 export type StoreSortOption = 'relevance' | 'price_asc' | 'price_desc';
 
 export const useStoreProducts = () => {
-  const [products, setProducts] = useState<Product[]>([]);
-  const [loading, setLoading] = useState(false);
-  const [error, setError] = useState<string | null>(null);
-  const [search, setSearch] = useState('');
-  const [priceRange, setPriceRange] = useState<[number, number]>([0, 5000000]);
-  const [sort, setSort] = useState<StoreSortOption>('relevance');
+  const { search, setSearch } = useStoreContext();
+
+  const [products, setProducts]           = useState<Product[]>([]);
+  const [loading, setLoading]             = useState(false);
+  const [error, setError]                 = useState<string | null>(null);
+  const [priceRange, setPriceRange]       = useState<[number, number]>([0, 5000000]);
+  const [sort, setSort]                   = useState<StoreSortOption>('relevance');
   const [selectedCategory, setSelectedCategory] = useState<number | undefined>();
 
   const loadProducts = useCallback(async () => {
@@ -33,7 +35,6 @@ export const useStoreProducts = () => {
   const filteredProducts = useMemo(() => {
     let list = [...products];
 
-    // Filtro por búsqueda
     if (search.trim()) {
       const query = search.toLowerCase();
       list = list.filter(p =>
@@ -42,18 +43,15 @@ export const useStoreProducts = () => {
       );
     }
 
-    // Filtro por categoría
     if (selectedCategory) {
       list = list.filter(p => p.subcategory?.category_id === selectedCategory);
     }
 
-    // Filtro por precio
     list = list.filter(p => {
       const price = Number(p.price);
       return price >= priceRange[0] && price <= priceRange[1];
     });
 
-    // Ordenamiento
     if (sort === 'price_asc') list.sort((a, b) => Number(a.price) - Number(b.price));
     if (sort === 'price_desc') list.sort((a, b) => Number(b.price) - Number(a.price));
 
@@ -65,7 +63,7 @@ export const useStoreProducts = () => {
     setPriceRange([0, 5000000]);
     setSort('relevance');
     setSelectedCategory(undefined);
-  }, []);
+  }, [setSearch]);
 
   return {
     products,

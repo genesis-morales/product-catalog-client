@@ -1,4 +1,3 @@
-// src/features/products/components/ProductForm.tsx
 import { PlusOutlined } from '@ant-design/icons';
 import type { FormInstance } from 'antd';
 import { Button, Divider, Form, Input, InputNumber, Select, Upload } from 'antd';

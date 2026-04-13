@@ -1,4 +1,3 @@
-// src/features/products/components/ProductFilters.tsx
 import { ClearOutlined, SearchOutlined } from '@ant-design/icons';
 import { Button, Input, Select } from 'antd';
 import React from 'react';
