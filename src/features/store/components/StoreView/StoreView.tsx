@@ -6,26 +6,21 @@ import { useStoreProducts } from '../../hooks/useStoreProducts';
 import { StoreCard } from '../StoreCard/StoreCard';
 import { StoreFilters } from '../StoreFilters/StoreFilters';
 import './StoreView.scss';
-
 export const StoreView: React.FC = () => {
   const {
     filteredProducts, loading, error,
-    search, priceRange, sort,
-    setSearch, setPriceRange, setSort, loadProducts,
+    search, priceRange, sort, selectedCategory,
+    setSearch, setPriceRange, setSort, setSelectedCategory,
+    clearFilters, loadProducts,
   } = useStoreProducts();
 
   const [categories, setCategories] = useState<Category[]>([]);
-  const [selectedCategory, setSelectedCategory] = useState<number | undefined>();
-
   useEffect(() => {
     ProductService.getCategories().then(setCategories).catch(console.error);
   }, []);
 
   const handleClear = () => {
-    setSearch('');
-    setPriceRange([0, 3000]);
-    setSort('relevance');
-    setSelectedCategory(undefined);
+    clearFilters();
     void loadProducts();
   };
 

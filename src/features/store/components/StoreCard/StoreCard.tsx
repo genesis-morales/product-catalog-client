@@ -35,7 +35,7 @@ export const StoreCard: React.FC<StoreCardProps> = ({ product }) => {
         <p className="store-card__desc">{product.description}</p>
         <div className="store-card__footer">
           <span className="store-card__price">
-            ${Number(product.price).toLocaleString('en-US', { minimumFractionDigits: 2 })}
+            ₡{Number(product.price).toLocaleString('es-CR', { minimumFractionDigits: 2 })}
           </span>
           <button className="store-card__cart-btn" aria-label={`Agregar ${product.name} al carrito`}>
             <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">

@@ -16,16 +16,10 @@ interface StoreFiltersProps {
   onClear: () => void;
 }
 
-export const StoreFilters: React.FC<StoreFiltersProps> = ({
-  priceRange,
-  onPriceRangeChange,
-  onClear,
-  categories,
-  selectedCategory,
-  onCategoryChange,
-}) => {
+export const StoreFilters: React.FC<StoreFiltersProps> = ({ priceRange, onPriceRangeChange, onClear, categories, selectedCategory, onCategoryChange,
+}) => { 
   const MIN = 0;
-  const MAX = 3000;
+  const MAX = 100000000;
 
   const handleMin = (e: React.ChangeEvent<HTMLInputElement>) => {
     const val = Math.min(Number(e.target.value), priceRange[1] - 50);
@@ -97,8 +91,8 @@ export const StoreFilters: React.FC<StoreFiltersProps> = ({
             />
           </div>
           <div className="filters__range-labels">
-            <span>${priceRange[0].toLocaleString()}</span>
-            <span>${priceRange[1].toLocaleString()}</span>
+            <span>₡{priceRange[0].toLocaleString('es-CR')}</span>
+            <span>₡{priceRange[1].toLocaleString('es-CR')}</span>
           </div>
         </div>
       </div>

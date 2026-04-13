@@ -106,7 +106,7 @@ export const ProductForm: React.FC<ProductFormProps> = ({
           step={0.01}
           placeholder="0.00"
           style={{ width: '100%' }}
-          prefix="$"
+          prefix="₡"
         />
       </Form.Item>
 

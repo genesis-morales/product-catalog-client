@@ -102,12 +102,12 @@
   width: 260px;
   flex-shrink: 0;
   position: sticky;
-  top: 88px;          
+  top: 88px;
   margin-top: 0;
 }
 
 .store-content {
-  flex: 1;            
+  flex: 1;
   min-width: 0;
   &__toolbar {
     display: flex;
@@ -117,10 +117,15 @@
   }
 
   &__count {
-    font-size: 14px;
-    color: #6b7280;
+font-size: 18px;
+    font-weight: 600;
+    color: #111;
     margin: 0;
-    strong { color: #111; }
+
+    strong {
+      color: #2563eb;
+      font-weight: 700;
+    }
   }
 
   &__sort {

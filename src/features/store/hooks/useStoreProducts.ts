@@ -9,19 +9,18 @@ export const useStoreProducts = () => {
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState<string | null>(null);
   const [search, setSearch] = useState('');
-  const [priceRange, setPriceRange] = useState<[number, number]>([0, 3000]);
+  const [priceRange, setPriceRange] = useState<[number, number]>([0, 5000000]);
   const [sort, setSort] = useState<StoreSortOption>('relevance');
+  const [selectedCategory, setSelectedCategory] = useState<number | undefined>();
 
   const loadProducts = useCallback(async () => {
     setLoading(true);
     setError(null);
-
     try {
-      const data = await StoreService.getProducts();
+      const data = await StoreService.getAllProducts();
       setProducts(data);
     } catch (err) {
       setError(err instanceof Error ? err.message : 'Error al cargar productos');
-      console.error('Error loading store products:', err);
     } finally {
       setLoading(false);
     }
@@ -34,27 +33,39 @@ export const useStoreProducts = () => {
   const filteredProducts = useMemo(() => {
     let list = [...products];
 
+    // Filtro por búsqueda
     if (search.trim()) {
       const query = search.toLowerCase();
-      list = list.filter(product =>
-        product.name.toLowerCase().includes(query) ||
-        product.description.toLowerCase().includes(query)
+      list = list.filter(p =>
+        p.name.toLowerCase().includes(query) ||
+        p.description.toLowerCase().includes(query)
       );
     }
 
-    list = list.filter(product => {
-      const price = Number(product.price);
+    // Filtro por categoría
+    if (selectedCategory) {
+      list = list.filter(p => p.subcategory?.category_id === selectedCategory);
+    }
+
+    // Filtro por precio
+    list = list.filter(p => {
+      const price = Number(p.price);
       return price >= priceRange[0] && price <= priceRange[1];
     });
 
-    if (sort === 'price_asc') {
-      list.sort((a, b) => Number(a.price) - Number(b.price));
-    } else if (sort === 'price_desc') {
-      list.sort((a, b) => Number(b.price) - Number(a.price));
-    }
+    // Ordenamiento
+    if (sort === 'price_asc') list.sort((a, b) => Number(a.price) - Number(b.price));
+    if (sort === 'price_desc') list.sort((a, b) => Number(b.price) - Number(a.price));
 
     return list;
-  }, [products, search, priceRange, sort]);
+  }, [products, search, priceRange, sort, selectedCategory]);
+
+  const clearFilters = useCallback(() => {
+    setSearch('');
+    setPriceRange([0, 5000000]);
+    setSort('relevance');
+    setSelectedCategory(undefined);
+  }, []);
 
   return {
     products,
@@ -64,9 +75,12 @@ export const useStoreProducts = () => {
     search,
     priceRange,
     sort,
+    selectedCategory,
     setSearch,
     setPriceRange,
     setSort,
+    setSelectedCategory,
+    clearFilters,
     loadProducts,
   };
 };

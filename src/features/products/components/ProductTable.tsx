@@ -93,8 +93,7 @@ export const ProductTable: React.FC<ProductTableProps> = ({
       dataIndex: 'price',
       key: 'price',
       sorter: (a: Product, b: Product) => a.price - b.price,
-      render: (price: number) => `$${price.toFixed(2)}`,
-    },
+      render: (price: number) => `₡${Number(price).toLocaleString('es-CR')}`,},
     {
       title: 'STOCK',
       dataIndex: 'stock',
