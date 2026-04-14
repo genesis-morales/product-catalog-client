@@ -26,7 +26,7 @@ export const CartProvider: React.FC<{ children: React.ReactNode }> = ({ children
     try {
       const data = await CartService.getCart();
       setCart(data);
-      if (data.guest_token) setCartToken(data.guest_token); // ← aquí
+      if (data.guest_token) setCartToken(data.guest_token);
     } catch (err) {
       console.error('Error cargando carrito:', err);
     }

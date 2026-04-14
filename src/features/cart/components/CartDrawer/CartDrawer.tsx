@@ -1,10 +1,23 @@
 import React from 'react';
+import { useNavigate } from 'react-router-dom';
 import { useCart } from '../../context/CartContext';
 import { CartItemRow } from '../CartItem/CartItemRow';
+import { useAuth } from '../../../auth/context/AuthContext';
 import './CartDrawer.scss';
 
 export const CartDrawer: React.FC = () => {
   const { cart, isOpen, closeCart, itemCount, loading } = useCart();
+  const { isAuthenticated } = useAuth();
+  const navigate = useNavigate();
+
+  const handleCheckout = () => {
+  closeCart();
+  if (!isAuthenticated) {
+    navigate('/auth?redirect=/checkout');
+  } else {
+    navigate('/checkout');
+  }
+};
 
   return (
     <>
@@ -65,7 +78,7 @@ export const CartDrawer: React.FC = () => {
                 ₡{cart.total.toLocaleString('es-CR', { minimumFractionDigits: 2 })}
               </span>
             </div>
-            <button className="cart-drawer__checkout">
+            <button className="cart-drawer__checkout" onClick={handleCheckout}>
               Proceder al pago
             </button>
           </div>

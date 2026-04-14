@@ -1,0 +1,53 @@
+.auth-page {
+  min-height: 100vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: #f3f4f6;
+  padding: 24px;
+
+  &__card {
+    background: #fff;
+    border-radius: 16px;
+    box-shadow: 0 4px 24px rgba(0, 0, 0, 0.08);
+    width: 100%;
+    max-width: 440px;
+    overflow: hidden;
+  }
+
+  &__tabs {
+    display: flex;
+    border-bottom: 1.5px solid #e5e7eb;
+  }
+
+  &__tab {
+    flex: 1;
+    height: 52px;
+    background: none;
+    border: none;
+    font-size: 15px;
+    font-weight: 500;
+    color: #6b7280;
+    cursor: pointer;
+    transition: color 0.15s, box-shadow 0.15s;
+
+    &:hover { color: #2563eb; }
+
+    &--active {
+      color: #2563eb;
+      font-weight: 600;
+      box-shadow: inset 0 -2px 0 #2563eb;
+    }
+  }
+
+  &__form {
+    padding: 32px;
+  }
+}
+
+// Ocultar el header/switch de los forms dentro de AuthPage
+// ya que las tabs hacen ese trabajo
+.auth-page .auth-form__header,
+.auth-page .auth-form__switch {
+  display: none;
+}

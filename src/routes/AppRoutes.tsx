@@ -2,6 +2,7 @@ import { Suspense, lazy } from 'react';
 import { Route, Routes } from 'react-router-dom';
 import AppLayout from '../components/layout/AppLayout/Layout';
 import StoreLayout from '../components/layout/StoreLayout/StoreLayout';
+import { AuthPage } from '../pages/auth/AuthPage';
 
 const Dashboard         = lazy(() => import('../pages/admin/Dashboard'));
 const ProductManagement = lazy(() => import('../features/products/components/ProductManagement').then(m => ({ default: m.ProductManagement })));
@@ -13,7 +14,8 @@ const ProductDetailPage = lazy(() => import('../pages/store/ProductDetailPage'))
 export const AppRoutes = () => (
   <Suspense fallback={<div>Cargando...</div>}>
     <Routes>
-
+      <Route path="/auth" element={<AuthPage />} />
+      
       {/* Admin */}
       <Route path="/" element={<AppLayout />}>
         <Route path="/dashboard" element={<Dashboard />} />

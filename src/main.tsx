@@ -5,14 +5,17 @@ import 'antd/dist/reset.css';
 import './index.css'
 import App from './App.tsx'
 import { CartProvider } from './features/cart/context/CartContext'
+import { AuthProvider } from './features/auth/context/AuthContext'
 
 createRoot(document.getElementById('root')!).render(
   <StrictMode>
     <ConfigProvider theme={{
       token: { fontFamily: "'General Sans', -apple-system, Helvetica, sans-serif" }}}>
-      <CartProvider>
-        <App />
-      </CartProvider>
+      <AuthProvider>
+        <CartProvider>
+          <App />
+        </CartProvider>
+      </AuthProvider>
     </ConfigProvider>
   </StrictMode>,
 )
