@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
+import { CheckCircleFilled } from '@ant-design/icons';
 import { useCart } from '../../cart/context/CartContext';
 import { OrderService } from '../services/orderService';
 import { CheckoutForm } from '../components/CheckoutForm';
@@ -29,7 +30,7 @@ export const CheckoutPage: React.FC = () => {
     return (
       <div className="checkout-confirm">
         <div className="checkout-confirm__card">
-          <div className="checkout-confirm__icon">✓</div>
+          <CheckCircleFilled className="checkout-confirm__icon" />
           <h2 className="checkout-confirm__title">¡Pedido confirmado!</h2>
           <p className="checkout-confirm__number">Orden <strong>{order.order_number}</strong></p>
           <p className="checkout-confirm__msg">

@@ -17,6 +17,7 @@ const AuthContext = createContext<AuthContextType | null>(null);
 export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children }) => {
   const [user, setUser] = useState<User | null>(null);
   const [loading, setLoading] = useState(true);
+  const [pendingRedirect, setPendingRedirect] = useState<string | null>(null);
   const navigate = useNavigate();
 
   useEffect(() => {
@@ -31,16 +32,18 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
     }
   }, []);
 
+  useEffect(() => {
+    if (pendingRedirect && user) {
+      navigate(pendingRedirect);
+      setPendingRedirect(null);
+    }
+  }, [user, pendingRedirect]);
+
   const login = async (credentials: LoginCredentials) => {
     const { token, user } = await AuthService.login(credentials);
     localStorage.setItem('auth_token', token);
     setUser(user);
-    // redirigir según rol
-    if (user.role === 'admin') {
-      navigate('/dashboard');
-    } else {
-      navigate('/store');
-    }
+    setPendingRedirect(user.role === 'admin' ? '/dashboard' : '/store');
   };
 
   const register = async (data: RegisterData) => {

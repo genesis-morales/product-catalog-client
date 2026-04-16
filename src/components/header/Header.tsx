@@ -6,6 +6,7 @@ import { useCart } from '../../features/cart/context/CartContext';
 import { useStoreContext } from '../../features/store/context/StoreContext';
 import { useAuth } from '../../features/auth/context/AuthContext';
 import { LogoutOutlined } from '@ant-design/icons';
+import { getAvatarColor, getInitials } from '../../utils/avatarColor';
 import './Header.scss';
 
 export const Header: React.FC = () => {
@@ -48,9 +49,14 @@ export const Header: React.FC = () => {
         </button>
 
         {isAuthenticated ? (
-          // usuario logueado — muestra nombre y botón logout
           <div className="header__user">
-            <span className="header__username">{user?.name}</span>
+            <div
+              className="header__avatar"
+              style={{ backgroundColor: getAvatarColor(user?.name ?? '') }}
+              title={user?.name}
+            >
+              {getInitials(user?.name ?? '')}
+            </div>
             <button
               className="header__action-btn"
               onClick={logout}
@@ -60,7 +66,6 @@ export const Header: React.FC = () => {
             </button>
           </div>
         ) : (
-          // no logueado — redirige al login
           <button
             className="header__action-btn"
             onClick={() => navigate('/auth')}

@@ -11,9 +11,10 @@ export const ProtectedRoute: React.FC<ProtectedRouteProps> = ({ children, requir
   const { isAuthenticated, loading, user } = useAuth();
   const location = useLocation();
 
-  if (loading) return <div>Cargando...</div>;
-
-  if (!isAuthenticated) {
+if (loading || (isAuthenticated && !user)) {
+    return <div>Cargando...</div>;
+  }
+ if (!isAuthenticated) {
     return <Navigate to={`/auth?redirect=${location.pathname}`} replace />;
   }
 
