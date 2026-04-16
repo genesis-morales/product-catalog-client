@@ -1,13 +1,18 @@
 import React from 'react';
 import { Badge } from 'antd';
+import { useNavigate } from 'react-router-dom';
 import { MenuOutlined, SearchOutlined, ShoppingCartOutlined, UserOutlined, } from '@ant-design/icons';
 import { useCart } from '../../features/cart/context/CartContext';
 import { useStoreContext } from '../../features/store/context/StoreContext';
+import { useAuth } from '../../features/auth/context/AuthContext';
+import { LogoutOutlined } from '@ant-design/icons';
 import './Header.scss';
 
 export const Header: React.FC = () => {
   const { openCart, itemCount } = useCart();
   const { search, setSearch } = useStoreContext();
+  const { isAuthenticated, user, logout } = useAuth();
+  const navigate = useNavigate();
 
   return (
     <header className="header">
@@ -42,9 +47,28 @@ export const Header: React.FC = () => {
           </Badge>
         </button>
 
-        <button className="header__action-btn" aria-label="Perfil de usuario">
-          <UserOutlined style={{ fontSize: 20 }} />
-        </button>
+        {isAuthenticated ? (
+          // usuario logueado — muestra nombre y botón logout
+          <div className="header__user">
+            <span className="header__username">{user?.name}</span>
+            <button
+              className="header__action-btn"
+              onClick={logout}
+              aria-label="Cerrar sesión"
+            >
+              <LogoutOutlined style={{ fontSize: 20 }} />
+            </button>
+          </div>
+        ) : (
+          // no logueado — redirige al login
+          <button
+            className="header__action-btn"
+            onClick={() => navigate('/auth')}
+            aria-label="Iniciar sesión"
+          >
+            <UserOutlined style={{ fontSize: 20 }} />
+          </button>
+        )}
       </div>
     </header>
   );

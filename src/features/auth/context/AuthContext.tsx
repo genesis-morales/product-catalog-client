@@ -1,5 +1,6 @@
 import React, { createContext, useContext, useEffect, useState } from 'react';
 import { AuthService } from '../services/authService';
+import { useNavigate } from 'react-router-dom';
 import type { User, LoginCredentials, RegisterData } from '../types/auth';
 
 interface AuthContextType {
@@ -16,6 +17,7 @@ const AuthContext = createContext<AuthContextType | null>(null);
 export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children }) => {
   const [user, setUser] = useState<User | null>(null);
   const [loading, setLoading] = useState(true);
+  const navigate = useNavigate();
 
   useEffect(() => {
     const token = localStorage.getItem('auth_token');
@@ -33,18 +35,26 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
     const { token, user } = await AuthService.login(credentials);
     localStorage.setItem('auth_token', token);
     setUser(user);
+    // redirigir según rol
+    if (user.role === 'admin') {
+      navigate('/dashboard');
+    } else {
+      navigate('/store');
+    }
   };
 
   const register = async (data: RegisterData) => {
     const { token, user } = await AuthService.register(data);
     localStorage.setItem('auth_token', token);
     setUser(user);
+    navigate('/store');
   };
 
   const logout = async () => {
     await AuthService.logout();
     localStorage.removeItem('auth_token');
     setUser(null);
+    navigate('/store');
   };
 
   return (

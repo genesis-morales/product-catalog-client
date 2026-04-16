@@ -1,5 +1,6 @@
 import { StrictMode } from 'react'
 import { createRoot } from 'react-dom/client'
+import { BrowserRouter } from 'react-router-dom';
 import { ConfigProvider } from 'antd'
 import 'antd/dist/reset.css';
 import './index.css'
@@ -11,11 +12,13 @@ createRoot(document.getElementById('root')!).render(
   <StrictMode>
     <ConfigProvider theme={{
       token: { fontFamily: "'General Sans', -apple-system, Helvetica, sans-serif" }}}>
-      <AuthProvider>
-        <CartProvider>
-          <App />
-        </CartProvider>
-      </AuthProvider>
+      <BrowserRouter>
+        <AuthProvider>
+          <CartProvider>
+            <App />
+          </CartProvider>
+        </AuthProvider>
+      </BrowserRouter>
     </ConfigProvider>
   </StrictMode>,
 )

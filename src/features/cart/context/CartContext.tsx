@@ -9,6 +9,7 @@ interface CartContextType {
   addItem: (productId: number, quantity?: number) => Promise<void>;
   updateItem: (itemId: number, quantity: number) => Promise<void>;
   removeItem: (itemId: number) => Promise<void>;
+  fetchCart: () => Promise<void>;
   itemCount: number;
   isOpen: boolean;
   openCart: () => void;
@@ -41,7 +42,7 @@ export const CartProvider: React.FC<{ children: React.ReactNode }> = ({ children
     try {
       const data = await CartService.addItem(productId, quantity);
       setCart(data);
-      if (data.guest_token) setCartToken(data.guest_token); // ← aquí también
+      if (data.guest_token) setCartToken(data.guest_token);
       setIsOpen(true);
     } finally {
       setLoading(false);
@@ -74,7 +75,7 @@ export const CartProvider: React.FC<{ children: React.ReactNode }> = ({ children
     <CartContext.Provider value={{
       cart, loading,
       addItem, updateItem, removeItem,
-      itemCount,
+      itemCount, fetchCart,
       isOpen, openCart: () => setIsOpen(true), closeCart: () => setIsOpen(false),
     }}>
       {children}

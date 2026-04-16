@@ -41,14 +41,14 @@
   }
 
   &__search {
-    flex: 1;                    // ← ocupa todo el espacio disponible
+    flex: 1;
     display: flex;
-    justify-content: center;    // ← centra el input dentro del espacio
+    justify-content: center;
     align-items: center;
 
     .header__search-bar {
       width: 100%;
-      max-width: 480px;         // ← limita el ancho máximo
+      max-width: 480px;
       display: flex;
       align-items: center;
       gap: 8px;
@@ -60,6 +60,17 @@
 
       &:focus-within { border-color: #2563eb; }
     }
+
+    .header__user {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+}
+
+  .header__username {
+    font-size: 14px;
+    color: var(--color-text);
+  }
   }
 
   &__search-icon {

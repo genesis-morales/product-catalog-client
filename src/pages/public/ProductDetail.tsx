@@ -1,4 +1,3 @@
-// src/pages/Dashboard.tsx
 export default function ProductDetail() {
   return (
     <div>
