@@ -1,0 +1,19 @@
+.of-wrapper {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  gap: 12px;
+  flex-wrap: wrap;
+  width: 100%;
+  margin-bottom: 16px;
+}
+
+.of-search-input {
+  flex: 1;
+  min-width: 200px;
+  max-width: 360px;
+}
+
+.of-status-select {
+  min-width: 160px;
+}

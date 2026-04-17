@@ -1,7 +1,8 @@
-export default function Orders() {
-  return (
-    <div>
-      <h1>Orders</h1>
-    </div>
-  );
-}
+import React from 'react';
+import { OrderManagement } from '../../features/orders/components/order-managment/OrderManagement';
+
+const OrdersPage: React.FC = () => {
+  return <OrderManagement />;
+};
+
+export default OrdersPage;

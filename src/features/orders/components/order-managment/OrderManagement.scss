@@ -1,0 +1,24 @@
+.om-wrapper {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+  width: 100%;
+}
+
+.om-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  flex-wrap: wrap;
+  gap: 12px;
+}
+
+.om-title {
+  margin: 0;
+  font-weight: 600;
+}
+
+.om-subtitle {
+  margin: 4px 0 0;
+  color: #666;
+}
