@@ -1,0 +1,29 @@
+.dp {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+.dp-loading {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: 300px;
+}
+
+.dp-header {
+  margin-bottom: 4px;
+}
+
+.dp-title {
+  font-size: 22px;
+  font-weight: 700;
+  color: #111827;
+  margin: 0;
+}
+
+.dp-subtitle {
+  font-size: 14px;
+  color: #6b7280;
+  margin: 4px 0 0;
+}

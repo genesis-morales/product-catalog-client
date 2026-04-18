@@ -146,7 +146,7 @@ export const ProductForm: React.FC<ProductFormProps> = ({
           return false;
         }}
         onRemove={onRemoveImage}
-        accept="image/*"
+        accept="imag/*"
         maxCount={1}
       >
         {fileList.length >= 1 ? null : (

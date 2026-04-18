@@ -1,0 +1,19 @@
+.sales-chart {
+  background: #fff;
+  border-radius: 12px;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.06);
+  height: 100%;
+
+  .ant-card-head {
+    border-bottom: 1px solid #f3f4f6;
+    padding: 0 20px;
+    min-height: 48px;
+    font-size: 14px;
+    font-weight: 600;
+    color: #111827;
+  }
+
+  .ant-card-body {
+    padding: 20px;
+  }
+}

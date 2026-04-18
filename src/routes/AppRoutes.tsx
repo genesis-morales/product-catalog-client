@@ -6,7 +6,7 @@ import { AuthPage } from '../pages/auth/AuthPage';
 import { CheckoutPage } from '../features/checkout/pages/CheckoutPage';
 import { ProtectedRoute } from '../components/protected-route/ProtectedRoute';
 
-const Dashboard         = lazy(() => import('../pages/admin/Dashboard'));
+const Dashboard         = lazy(() => import('../pages/admin/dasboard/Dashboard'));
 const ProductManagement = lazy(() => import('../features/products/components/ProductManagement').then(m => ({ default: m.ProductManagement })));
 const Orders            = lazy(() => import('../pages/admin/Orders'));
 const Customers         = lazy(() => import('../pages/admin/Customers'));
