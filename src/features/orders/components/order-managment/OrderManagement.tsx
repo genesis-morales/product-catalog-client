@@ -1,6 +1,8 @@
-import React, { useCallback } from 'react';
+import React, { useCallback, useState } from 'react';
 import { OrderProvider, useOrderContext } from '../../context/OrderContext';
+import type { Order } from '../../types/order';
 import { OrderDetailModal } from '../order-detail/OrderDetailModal';
+import { OrderEditModal } from '../order-edit/OrderEditModal';
 import { OrderFiltersBar } from '../order-filter/OrderFilters';
 import { OrderTable } from '../order-table/OrderTable';
 import './OrderManagement.scss';
@@ -12,9 +14,22 @@ const OrderManagementContent: React.FC = () => {
     selectedOrder, modalOpen, openDetail, closeDetail, updateOrderStatus,
   } = useOrderContext();
 
+  const [editingOrder, setEditingOrder] = useState<Order | null>(null);
+  const [editModalOpen, setEditModalOpen] = useState(false);
+
   const handlePaginationChange = useCallback((page: number, size: number) => {
     loadOrders(page, size);
   }, [loadOrders]);
+
+  const handleEdit = useCallback((order: Order) => {
+    setEditingOrder(order);
+    setEditModalOpen(true);
+  }, []);
+
+  const handleCloseEditModal = useCallback(() => {
+    setEditModalOpen(false);
+    setEditingOrder(null);
+  }, []);
 
   return (
     <div className="om-wrapper">
@@ -38,7 +53,13 @@ const OrderManagementContent: React.FC = () => {
         orders={filteredOrders}
         loading={loading}
         onView={openDetail}
-        pagination={{ current: currentPage, pageSize, total, onChange: handlePaginationChange }}
+        onEdit={handleEdit}
+        pagination={{
+          current: currentPage,
+          pageSize,
+          total,
+          onChange: handlePaginationChange,
+        }}
       />
 
       <OrderDetailModal
@@ -46,6 +67,15 @@ const OrderManagementContent: React.FC = () => {
         open={modalOpen}
         onClose={closeDetail}
         onStatusUpdated={updateOrderStatus}
+      />
+
+      <OrderEditModal
+        order={editingOrder}
+        open={editModalOpen}
+        onClose={handleCloseEditModal}
+        onSaved={async () => {
+          await loadOrders(currentPage, pageSize);
+        }}
       />
     </div>
   );

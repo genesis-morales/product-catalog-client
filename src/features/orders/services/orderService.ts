@@ -18,8 +18,25 @@ export const OrderService = {
     return data;
   },
 
-  updateStatus: async (id: number, status: OrderStatus): Promise<Order> => {
-    const { data } = await api.patch(`/admin/orders/${id}/status`, { status });
-    return data;
-  },
+updateOrderShipping: async (
+  id: number,
+  payload: {
+    shipping_name: string;
+    shipping_phone: string;
+    shipping_address: string;
+    shipping_city: string;
+    shipping_notes?: string;
+  }
+): Promise<Order> => {
+  const { data } = await api.put(`/admin/orders/${id}/shipping`, payload);
+  return data;
+},
+
+updateOrderStatus: async (
+  id: number,
+  status: OrderStatus
+): Promise<Order> => {
+  const { data } = await api.put(`/admin/orders/${id}/status`, { status });
+  return data;
+},
 };

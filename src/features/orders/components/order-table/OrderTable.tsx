@@ -1,4 +1,4 @@
-import { EyeOutlined } from '@ant-design/icons';
+import { EyeOutlined, EditOutlined } from '@ant-design/icons';
 import { Button, Space, Table, Tag } from 'antd';
 import React, { useMemo } from 'react';
 import type { Order, OrderStatus } from '../../types/order';
@@ -15,6 +15,7 @@ interface OrderTableProps {
   orders: Order[];
   loading: boolean;
   onView: (order: Order) => void;
+  onEdit: (order: Order) => void;
   pagination?: {
     current: number;
     pageSize: number;
@@ -26,7 +27,7 @@ interface OrderTableProps {
 export const OrderTable: React.FC<OrderTableProps> = ({
   orders,
   loading,
-  onView,
+  onView, onEdit,
   pagination,
 }) => {
   const columns = useMemo(() => [
@@ -88,14 +89,21 @@ export const OrderTable: React.FC<OrderTableProps> = ({
       title: 'ACCIONES',
       key: 'actions',
       render: (_: any, record: Order) => (
-        <Button
-          type="text"
-          icon={<EyeOutlined />}
-          onClick={() => onView(record)}
-        />
+        <Space size="small">
+          <Button
+            type="text"
+            icon={<EyeOutlined />}
+            onClick={() => onView(record)}
+          />
+          <Button
+            type="text"
+            icon={<EditOutlined />}
+            onClick={() => onEdit(record)}
+          />
+        </Space>
       ),
     },
-  ], [onView]);
+  ], [onView, onEdit]);
 
   return (
     <Table
