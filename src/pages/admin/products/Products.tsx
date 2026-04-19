@@ -4,6 +4,7 @@ import { Upload } from 'antd';
 import type { UploadFile } from 'antd/es/upload/interface';
 import { PlusOutlined, EditOutlined, DeleteOutlined, SearchOutlined, ClearOutlined } from '@ant-design/icons';
 import { Product } from '../../../types/product';
+import { PageHeader } from '../../../components/page-header';
 import './Products.css';
 
 
@@ -392,10 +393,10 @@ export default function Products() {
     <div className="products-container">
       <div className="products-header">
         <div>
-          <h1 className="products-title">Catálogo de Productos</h1>
-          <p className="products-subtitle">
-            Gestiona tu catálogo de productos, incluyendo inventario y precios.
-          </p>
+          <PageHeader
+            title="Productos"
+            subtitle="Gestiona el catálogo de la tienda."
+          />
         </div>
         <Button
           type="primary"

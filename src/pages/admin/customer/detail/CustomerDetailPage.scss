@@ -1,0 +1,35 @@
+.customer-detail-page {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+.customer-detail-page__loading {
+  min-height: 260px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.customer-detail-page__content {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+.customer-detail-page__grid {
+  display: grid;
+  grid-template-columns: minmax(0, 2fr) minmax(320px, 1fr);
+  gap: 16px;
+}
+
+.customer-detail-page__main,
+.customer-detail-page__side {
+  min-width: 0;
+}
+
+@media (max-width: 1100px) {
+  .customer-detail-page__grid {
+    grid-template-columns: 1fr;
+  }
+}

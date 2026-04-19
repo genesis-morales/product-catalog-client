@@ -1,0 +1,34 @@
+.customer-summary-card {
+  width: 100%;
+}
+
+.customer-summary-card__grid {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 20px;
+}
+
+.customer-summary-card__label {
+  margin: 0 0 6px;
+  font-size: 12px;
+  font-weight: 600;
+  color: #6b7280;
+  text-transform: uppercase;
+}
+
+.customer-summary-card__value {
+  margin: 0;
+  font-size: 24px;
+  color: #111827;
+}
+
+.customer-summary-card__text {
+  margin: 0;
+  color: #111827;
+}
+
+@media (max-width: 900px) {
+  .customer-summary-card__grid {
+    grid-template-columns: 1fr;
+  }
+}

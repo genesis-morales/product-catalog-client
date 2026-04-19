@@ -6,6 +6,7 @@ import { SalesChart } from '../../../features/dashboard/components/sales-charts/
 import { StatsCards } from '../../../features/dashboard/components/stats-cards/StatsCards';
 import { TopProducts } from '../../../features/dashboard/components/top-products/TopProducts';
 import { useDashboard } from '../../../features/dashboard/hooks/useDashboard';
+import { PageHeader } from '../../../components/page-header/PageHeader';
 import './DashboardPage.scss';
 
 const Dashboard: React.FC = () => {
@@ -22,8 +23,10 @@ const Dashboard: React.FC = () => {
   return (
     <div className="dp">
       <div className="dp-header">
-        <h1 className="dp-title">Dashboard</h1>
-        <p className="dp-subtitle">Resumen general de la tienda</p>
+        <PageHeader
+          title="Dashboard"
+          subtitle="Resumen general de la tienda"
+        />
       </div>
 
       {/* KPIs */}

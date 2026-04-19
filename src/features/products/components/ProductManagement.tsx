@@ -1,4 +1,3 @@
-// src/features/products/components/ProductManagement.tsx
 import { PlusOutlined } from '@ant-design/icons';
 import { Button, Drawer, Form, Modal, message } from 'antd';
 import React, { useCallback, useState } from 'react';
@@ -11,6 +10,7 @@ import type { Product } from '../types/product';
 import { ProductFilters } from './ProductFilters';
 import { ProductForm } from './ProductForm';
 import { ProductTable } from './ProductTable';
+import { PageHeader } from '../../../components/page-header/PageHeader';
 
 export const ProductManagement: React.FC = () => {
   const [drawerOpen, setDrawerOpen] = useState(false);
@@ -98,10 +98,10 @@ export const ProductManagement: React.FC = () => {
     <div>
       <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: 16 }}>
         <div>
-          <h1 style={{ margin: 0 }}>Catálogo de Productos</h1>
-          <p style={{ margin: '8px 0', color: '#666' }}>
-            Gestiona tu catálogo de productos, incluyendo inventario y precios.
-          </p>
+          <PageHeader
+            title="Productos"
+            subtitle="Gestiona el catálogo de la tienda."
+          />
         </div>
         <Button
           type="primary"

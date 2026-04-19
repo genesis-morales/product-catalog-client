@@ -5,6 +5,7 @@ import { OrderDetailModal } from '../order-detail/OrderDetailModal';
 import { OrderEditModal } from '../order-edit/OrderEditModal';
 import { OrderFiltersBar } from '../order-filter/OrderFilters';
 import { OrderTable } from '../order-table/OrderTable';
+import { PageHeader } from '../../../../components/page-header/PageHeader';
 import './OrderManagement.scss';
 
 const OrderManagementContent: React.FC = () => {
@@ -35,10 +36,10 @@ const OrderManagementContent: React.FC = () => {
     <div className="om-wrapper">
       <div className="om-header">
         <div>
-          <h1 className="om-title">Órdenes</h1>
-          <p className="om-subtitle">
-            Gestiona y actualiza el estado de los pedidos de tus clientes.
-          </p>
+          <PageHeader
+            title="Órdenes"
+            subtitle="Gestiona y actualiza el estado de los pedidos de tus clientes."
+          />
         </div>
       </div>
 

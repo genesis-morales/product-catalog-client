@@ -1,16 +1,12 @@
-.dp {
+.customers-page {
   display: flex;
   flex-direction: column;
   gap: 16px;
 }
 
-.dp-loading {
+.customers-page__loading {
+  min-height: 260px;
   display: flex;
   align-items: center;
   justify-content: center;
-  height: 300px;
-}
-
-.dp-header {
-  margin-bottom: 4px;
 }

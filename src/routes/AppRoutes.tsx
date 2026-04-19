@@ -9,8 +9,9 @@ import { ProtectedRoute } from '../components/protected-route/ProtectedRoute';
 const Dashboard         = lazy(() => import('../pages/admin/dasboard/Dashboard'));
 const ProductManagement = lazy(() => import('../features/products/components/ProductManagement').then(m => ({ default: m.ProductManagement })));
 const Orders            = lazy(() => import('../pages/admin/Orders'));
-const Customers         = lazy(() => import('../pages/admin/Customers'));
 const StorePage         = lazy(() => import('../pages/store/StorePage'));
+const Customers = lazy(() => import('../pages/admin/customer/page/Customers').then(m => ({ default: m.Customers })));
+const CustomerDetailPage = lazy(() => import('../pages/admin/customer/detail/CustomerDetailPage'));
 const ProductDetailPage = lazy(() => import('../pages/store/ProductDetailPage'));
 
 export const AppRoutes = () => (
@@ -35,6 +36,7 @@ export const AppRoutes = () => (
         <Route path="/products"  element={<ProductManagement />} />
         <Route path="/orders"    element={<Orders />} />
         <Route path="/customers" element={<Customers />} />
+        <Route path="/customers/:id" element={<CustomerDetailPage />} />
       </Route>
 
       {/* Tienda — pública */}
@@ -43,7 +45,7 @@ export const AppRoutes = () => (
         <Route path=":id" element={<ProductDetailPage />} />
       </Route>
 
-      {/* Checkout — fuera del nest de /store 👇 */}
+      {/* Checkout — fuera del nest de /store */}
       <Route
         path="/checkout"
         element={
