@@ -7,15 +7,16 @@ interface ProtectedRouteProps {
   requiredRole?: 'admin' | 'customer';
 }
 
-export const ProtectedRoute: React.FC<ProtectedRouteProps> = ({ children, requiredRole }) => {
+const ProtectedRoute: React.FC<ProtectedRouteProps> = ({ children, requiredRole }) => {
   const { isAuthenticated, loading, user } = useAuth();
   const location = useLocation();
 
-if (loading || (isAuthenticated && !user)) {
+  if (loading || (isAuthenticated && !user)) {
     return <div>Cargando...</div>;
   }
- if (!isAuthenticated) {
-    return <Navigate to={`/auth?redirect=${location.pathname}`} replace />;
+
+  if (!isAuthenticated) {
+    return <Navigate to="/auth" state={{ from: location }} replace />;
   }
 
   if (requiredRole && user?.role !== requiredRole) {
@@ -24,3 +25,5 @@ if (loading || (isAuthenticated && !user)) {
 
   return <>{children}</>;
 };
+
+export default ProtectedRoute;

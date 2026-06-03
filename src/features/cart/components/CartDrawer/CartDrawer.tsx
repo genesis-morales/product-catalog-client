@@ -11,13 +11,16 @@ export const CartDrawer: React.FC = () => {
   const navigate = useNavigate();
 
   const handleCheckout = () => {
-  closeCart();
-  if (!isAuthenticated) {
-    navigate('/auth?redirect=/checkout');
-  } else {
-    navigate('/checkout');
-  }
-};
+    closeCart();
+
+    if (!isAuthenticated) {
+      navigate('/auth', {
+        state: { from: { pathname: '/checkout' } },
+      });
+    } else {
+      navigate('/checkout');
+    }
+  };
 
   return (
     <>

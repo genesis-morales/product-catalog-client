@@ -1,51 +1,33 @@
-import { Descriptions, Divider, Modal, Select, Space, Table, Tag, message } from 'antd';
-import React, { useState } from 'react';
+import { Descriptions, Divider, Modal, Space, Table, Tag } from 'antd';
+import React from 'react';
 import type { Order, OrderStatus } from '../../types/order';
 import './OrderDetailModal.scss';
 
 const STATUS_OPTIONS = [
-  { value: 'pending',    label: 'Pendiente' },
+  { value: 'pending', label: 'Pendiente' },
   { value: 'processing', label: 'En proceso' },
-  { value: 'completed',  label: 'Completada' },
-  { value: 'cancelled',  label: 'Cancelada' },
+  { value: 'completed', label: 'Completada' },
+  { value: 'cancelled', label: 'Cancelada' },
 ];
 
 const STATUS_COLORS: Record<OrderStatus, string> = {
-  pending:    'gold',
+  pending: 'gold',
   processing: 'blue',
-  completed:  'green',
-  cancelled:  'red',
+  completed: 'green',
+  cancelled: 'red',
 };
 
 interface OrderDetailModalProps {
   order: Order | null;
   open: boolean;
   onClose: () => void;
-  onStatusUpdated: (id: number, status: OrderStatus) => Promise<void>;
 }
 
 export const OrderDetailModal: React.FC<OrderDetailModalProps> = ({
   order,
   open,
   onClose,
-  onStatusUpdated,
 }) => {
-  const [updatingStatus, setUpdatingStatus] = useState(false);
-
-  const handleStatusChange = async (newStatus: OrderStatus) => {
-    if (!order) return;
-    setUpdatingStatus(true);
-    try {
-      await onStatusUpdated(order.id, newStatus);
-      message.success('Estado actualizado');
-      onClose();
-    } catch {
-      message.error('Error al actualizar el estado');
-    } finally {
-      setUpdatingStatus(false);
-    }
-  };
-
   const itemColumns = [
     {
       title: 'Producto',
@@ -73,6 +55,9 @@ export const OrderDetailModal: React.FC<OrderDetailModalProps> = ({
 
   if (!order) return null;
 
+  const statusLabel =
+    STATUS_OPTIONS.find((s) => s.value === order.status)?.label || order.status;
+
   return (
     <Modal
       title={
@@ -80,7 +65,7 @@ export const OrderDetailModal: React.FC<OrderDetailModalProps> = ({
           <span>Orden</span>
           <span className="orderNumberTitle">{order.order_number}</span>
           <Tag color={STATUS_COLORS[order.status]}>
-            {STATUS_OPTIONS.find((s) => s.value === order.status)?.label}
+            {statusLabel}
           </Tag>
         </Space>
       }
@@ -89,34 +74,35 @@ export const OrderDetailModal: React.FC<OrderDetailModalProps> = ({
       footer={null}
       width={720}
     >
-      {/* Cambio de estado */}
-      <div className="statusSection">
-        <span className="statusLabel">Cambiar estado:</span>
-        <Select
-          value={order.status}
-          options={STATUS_OPTIONS}
-          onChange={handleStatusChange}
-          loading={updatingStatus}
-          className="statusSelect"
-        />
-      </div>
+      <Descriptions title="Datos de la orden" column={2} size="small" bordered>
+        <Descriptions.Item label="Estado">
+          <Tag color={STATUS_COLORS[order.status]}>
+            {statusLabel}
+          </Tag>
+        </Descriptions.Item>
+        <Descriptions.Item label="Número de orden">
+          {order.order_number}
+        </Descriptions.Item>
+      </Descriptions>
 
       <Divider />
 
-      {/* Info del cliente y envío */}
       <Descriptions title="Datos de envío" column={2} size="small" bordered>
         <Descriptions.Item label="Nombre">{order.shipping_name}</Descriptions.Item>
         <Descriptions.Item label="Teléfono">{order.shipping_phone}</Descriptions.Item>
         <Descriptions.Item label="Ciudad">{order.shipping_city}</Descriptions.Item>
-        <Descriptions.Item label="Dirección" span={2}>{order.shipping_address}</Descriptions.Item>
+        <Descriptions.Item label="Dirección" span={2}>
+          {order.shipping_address}
+        </Descriptions.Item>
         {order.shipping_notes && (
-          <Descriptions.Item label="Notas" span={2}>{order.shipping_notes}</Descriptions.Item>
+          <Descriptions.Item label="Notas" span={2}>
+            {order.shipping_notes}
+          </Descriptions.Item>
         )}
       </Descriptions>
 
       <Divider />
 
-      {/* Productos */}
       {order.items && order.items.length > 0 && (
         <>
           <Table
@@ -131,7 +117,6 @@ export const OrderDetailModal: React.FC<OrderDetailModalProps> = ({
         </>
       )}
 
-      {/* Totales */}
       <div className="totals">
         <div className="totalRow">
           <span>Subtotal</span>

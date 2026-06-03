@@ -3,37 +3,55 @@ import {
   AppstoreOutlined,
   FileTextOutlined,
   InboxOutlined,
+  LogoutOutlined,
   MenuOutlined,
-  SettingOutlined,
   ShopOutlined,
   UserOutlined,
 } from '@ant-design/icons';
 import { Layout, Menu, theme } from 'antd';
 import type { MenuProps } from 'antd';
 import { Outlet, useLocation, useNavigate } from 'react-router-dom';
+import { useAuth } from '../../../features/auth/context/AuthContext';
 import './Layout.scss';
 
 const { Header, Content, Footer, Sider } = Layout;
 
 const NAV_ITEMS: MenuProps['items'] = [
   { key: '/dashboard', icon: <AppstoreOutlined />, label: 'Dashboard' },
-  { key: '/products',  icon: <InboxOutlined />,   label: 'Products'  },
-  { key: '/orders',    icon: <FileTextOutlined />, label: 'Orders'    },
-  { key: '/customers', icon: <UserOutlined />,     label: 'Customers' },
+  { key: '/products', icon: <InboxOutlined />, label: 'Products' },
+  { key: '/orders', icon: <FileTextOutlined />, label: 'Orders' },
+  { key: '/customers', icon: <UserOutlined />, label: 'Customers' },
 ];
+
+const getInitials = (name?: string) => {
+  if (!name) return 'A';
+
+  const parts = name.trim().split(' ').filter(Boolean);
+  if (parts.length === 1) return parts[0][0].toUpperCase();
+
+  return `${parts[0][0]}${parts[1][0]}`.toUpperCase();
+};
 
 const AppLayout: React.FC = () => {
   const [mobileOpen, setMobileOpen] = useState(false);
-  const navigate    = useNavigate();
-  const location    = useLocation();
-  const { token: { colorBgContainer } } = theme.useToken();
+  const navigate = useNavigate();
+  const location = useLocation();
+  const { logout, user } = useAuth();
+  const {
+    token: { colorBgContainer },
+  } = theme.useToken();
 
-  const openMobile  = () => setMobileOpen(true);
+  const openMobile = () => setMobileOpen(true);
   const closeMobile = () => setMobileOpen(false);
 
   const handleNavClick = (path: string) => {
     navigate(path);
     closeMobile();
+  };
+
+  const handleLogout = async () => {
+    closeMobile();
+    await logout();
   };
 
   const menuItems: MenuProps['items'] = NAV_ITEMS.map((item: any) => ({
@@ -43,7 +61,6 @@ const AppLayout: React.FC = () => {
 
   return (
     <Layout hasSider className="app-layout">
-
       <div
         className={`sider-overlay ${mobileOpen ? 'visible' : ''}`}
         onClick={closeMobile}
@@ -51,10 +68,12 @@ const AppLayout: React.FC = () => {
 
       <Sider className={`app-sider ${mobileOpen ? 'open' : ''}`} width={250}>
         <div className="sider-user">
-          <div className="sider-user__avatar">A</div>
+          <div className="sider-user__avatar">{getInitials(user?.name)}</div>
           <div className="sider-user__info">
-            <span className="sider-user__name">Admin</span>
-            <span className="sider-user__email">admin@techcatalog.com</span>
+            <span className="sider-user__name">{user?.name || 'Admin'}</span>
+            <span className="sider-user__email">
+              {user?.email || 'admin@techcatalog.com'}
+            </span>
           </div>
         </div>
 
@@ -66,18 +85,28 @@ const AppLayout: React.FC = () => {
         />
 
         <div className="sider-bottom">
-          <button className="sider-link" onClick={() => handleNavClick('/settings')}>
-            <SettingOutlined /> Settings
+          <button className="sider-link sider-link--logout" onClick={handleLogout}>
+            <LogoutOutlined />
+            Cerrar sesión
           </button>
-          <button className="sider-view-store" onClick={() => window.open('/store', '_blank')}>
-            <ShopOutlined /> View Store
+
+          <button
+            className="sider-view-store"
+            onClick={() => window.open('/store', '_blank')}
+          >
+            <ShopOutlined />
+            View Store
           </button>
         </div>
       </Sider>
 
       <Layout className="app-inner-layout">
         <Header className="app-header" style={{ background: colorBgContainer }}>
-          <button className="app-header__menu-btn" onClick={openMobile} aria-label="Abrir menú">
+          <button
+            className="app-header__menu-btn"
+            onClick={openMobile}
+            aria-label="Abrir menú"
+          >
             <MenuOutlined style={{ fontSize: 20 }} />
           </button>
         </Header>
@@ -92,7 +121,6 @@ const AppLayout: React.FC = () => {
           Tech Catalog ©{new Date().getFullYear()}
         </Footer>
       </Layout>
-
     </Layout>
   );
 };

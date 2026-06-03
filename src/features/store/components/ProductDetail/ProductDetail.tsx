@@ -14,6 +14,7 @@ export const ProductDetail: React.FC<ProductDetailProps> = ({ product }) => {
   const [imgError, setImgError] = useState(false);
   const { addItem } = useCart();
   const navigate = useNavigate();
+  const isOutOfStock = !product.available || product.stock === 0;
 
   return (
     <div className="product-detail">
@@ -54,20 +55,20 @@ export const ProductDetail: React.FC<ProductDetailProps> = ({ product }) => {
           <p className="product-detail__description">{product.description}</p>
 
           <div className="product-detail__stock">
-            {product.stock > 0 ? (
+            {isOutOfStock ? (
+              <span className="product-detail__stock--out">Sin stock</span>
+            ) : (
               <span className="product-detail__stock--available">
                 ✓ En stock ({product.stock} disponibles)
               </span>
-            ) : (
-              <span className="product-detail__stock--out">Sin stock</span>
             )}
           </div>
 
-          <button
-            className="product-detail__add-btn"
-            onClick={() => addItem(product.id)}
-            disabled={!product.available || product.stock === 0}
-          >
+            <button
+              className="product-detail__add-btn"
+              onClick={() => addItem(product.id)}
+              disabled={isOutOfStock}
+            >
             <ShoppingCartOutlined />
             Agregar al carrito
           </button>

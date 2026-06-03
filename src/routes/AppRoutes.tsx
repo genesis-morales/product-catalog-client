@@ -4,7 +4,7 @@ import AppLayout from '../components/layout/AppLayout/Layout';
 import StoreLayout from '../components/layout/StoreLayout/StoreLayout';
 import { AuthPage } from '../pages/auth/AuthPage';
 import { CheckoutPage } from '../features/checkout/pages/CheckoutPage';
-import { ProtectedRoute } from '../components/protected-route/ProtectedRoute';
+import ProtectedRoute from '../components/protected-route/ProtectedRoute';
 
 const Dashboard         = lazy(() => import('../pages/admin/dasboard/Dashboard'));
 const ProductManagement = lazy(() => import('../features/products/components/ProductManagement').then(m => ({ default: m.ProductManagement })));

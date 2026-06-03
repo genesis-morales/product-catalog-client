@@ -5,29 +5,33 @@ import type { RegisterData } from '../../types/auth';
 import '../AuthForms.scss';
 
 interface RegisterFormProps {
-  onSuccess?: () => void;
   onSwitchToLogin?: () => void;
 }
 
-export const RegisterForm: React.FC<RegisterFormProps> = ({ onSuccess, onSwitchToLogin }) => {
+export const RegisterForm: React.FC<RegisterFormProps> = ({ onSwitchToLogin }) => {
   const { register } = useAuth();
   const [form, setForm] = useState<RegisterData>({
-    name: '', email: '', password: '', password_confirmation: '',
+    name: '',
+    email: '',
+    password: '',
+    password_confirmation: '',
   });
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState<string | null>(null);
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
+
     if (form.password !== form.password_confirmation) {
       setError('Las contraseñas no coinciden');
       return;
     }
+
     setLoading(true);
     setError(null);
+
     try {
       await register(form);
-      onSuccess?.();
     } catch {
       setError('No se pudo crear la cuenta. Intenta con otro correo.');
     } finally {
@@ -103,7 +107,11 @@ export const RegisterForm: React.FC<RegisterFormProps> = ({ onSuccess, onSwitchT
 
       <p className="auth-form__switch">
         ¿Ya tienes cuenta?{' '}
-        <button className="auth-form__switch-btn" onClick={onSwitchToLogin}>
+        <button
+          type="button"
+          className="auth-form__switch-btn"
+          onClick={onSwitchToLogin}
+        >
           Inicia sesión
         </button>
       </p>

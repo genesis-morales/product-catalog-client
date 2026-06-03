@@ -5,11 +5,10 @@ import type { LoginCredentials } from '../../types/auth';
 import '../AuthForms.scss';
 
 interface LoginFormProps {
-  onSuccess?: () => void;
   onSwitchToRegister?: () => void;
 }
 
-export const LoginForm: React.FC<LoginFormProps> = ({ onSuccess, onSwitchToRegister }) => {
+export const LoginForm: React.FC<LoginFormProps> = ({ onSwitchToRegister }) => {
   const { login } = useAuth();
   const [form, setForm] = useState<LoginCredentials>({ email: '', password: '' });
   const [loading, setLoading] = useState(false);
@@ -19,9 +18,9 @@ export const LoginForm: React.FC<LoginFormProps> = ({ onSuccess, onSwitchToRegis
     e.preventDefault();
     setLoading(true);
     setError(null);
+
     try {
       await login(form);
-      onSuccess?.();
     } catch {
       setError('Correo o contraseña incorrectos');
     } finally {
@@ -72,7 +71,11 @@ export const LoginForm: React.FC<LoginFormProps> = ({ onSuccess, onSwitchToRegis
 
       <p className="auth-form__switch">
         ¿No tienes cuenta?{' '}
-        <button className="auth-form__switch-btn" onClick={onSwitchToRegister}>
+        <button
+          type="button"
+          className="auth-form__switch-btn"
+          onClick={onSwitchToRegister}
+        >
           Regístrate
         </button>
       </p>

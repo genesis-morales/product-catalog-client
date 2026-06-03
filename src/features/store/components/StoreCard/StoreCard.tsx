@@ -15,8 +15,13 @@ export const StoreCard: React.FC<StoreCardProps> = ({ product }) => {
   const { addItem } = useCart();
   const navigate = useNavigate();
 
+  const isOutOfStock = !product.available || product.stock === 0;
+
   const handleAddToCart = (e: React.MouseEvent) => {
     e.stopPropagation();
+
+    if (isOutOfStock) return;
+
     addItem(product.id);
   };
 
@@ -38,6 +43,10 @@ export const StoreCard: React.FC<StoreCardProps> = ({ product }) => {
             <PictureOutlined style={{ fontSize: 40, color: '#9ca3af' }} />
           </div>
         )}
+
+        {isOutOfStock && (
+          <span className="store-card__badge">Sin stock</span>
+        )}
       </div>
 
       <div className="store-card__body">
@@ -45,13 +54,29 @@ export const StoreCard: React.FC<StoreCardProps> = ({ product }) => {
         <p className="store-card__desc">{product.description}</p>
 
         <div className="store-card__footer">
-          <span className="store-card__price">
-            ₡{Number(product.price).toLocaleString('es-CR', { minimumFractionDigits: 2 })}
-          </span>
+          <div className="store-card__meta">
+            <span className="store-card__price">
+              ₡{Number(product.price).toLocaleString('es-CR', {
+                minimumFractionDigits: 2,
+              })}
+            </span>
+
+            <span
+              className={`store-card__stock ${
+                isOutOfStock
+                  ? 'store-card__stock--out'
+                  : 'store-card__stock--available'
+              }`}
+            >
+              {isOutOfStock ? 'Sin stock' : `Stock: ${product.stock}`}
+            </span>
+          </div>
+
           <button
             className="store-card__cart-btn"
             aria-label={`Agregar ${product.name} al carrito`}
             onClick={handleAddToCart}
+            disabled={isOutOfStock}
           >
             <ShoppingCartOutlined style={{ fontSize: 18 }} />
           </button>
