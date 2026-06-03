@@ -1,11 +1,16 @@
 import React from 'react';
 import { Badge } from 'antd';
 import { useNavigate } from 'react-router-dom';
-import { MenuOutlined, SearchOutlined, ShoppingCartOutlined, UserOutlined, } from '@ant-design/icons';
+import {
+  SearchOutlined,
+  ShoppingCartOutlined,
+  UserOutlined,
+  LogoutOutlined,
+} from '@ant-design/icons';
+import logo from '../../assets/logo.svg';
 import { useCart } from '../../features/cart/context/CartContext';
 import { useStoreContext } from '../../features/store/context/StoreContext';
 import { useAuth } from '../../features/auth/context/AuthContext';
-import { LogoutOutlined } from '@ant-design/icons';
 import { getAvatarColor, getInitials } from '../../utils/avatarColor';
 import './Header.scss';
 
@@ -18,18 +23,21 @@ export const Header: React.FC = () => {
   return (
     <header className="header">
       <div className="header__left">
-        <button className="header__menu-btn" aria-label="Abrir menú">
-          <MenuOutlined />
+        <button
+          className="header__brand-btn"
+          onClick={() => navigate('/')}
+          aria-label="Ir al inicio"
+        >
+          <img src={logo} alt="" className="header__logo" aria-hidden="true" />
         </button>
-        <span className="header__brand">TechStore</span>
       </div>
 
-       <div className="header__search">
+      <div className="header__search">
         <div className="header__search-bar">
           <SearchOutlined className="header__search-icon" />
           <input
             type="text"
-            placeholder="Buscar productos..."
+            placeholder="Buscar productos, marcas y categorías..."
             className="header__search-input"
             value={search}
             onChange={(e) => setSearch(e.target.value)}
@@ -43,7 +51,7 @@ export const Header: React.FC = () => {
           onClick={openCart}
           aria-label="Abrir carrito"
         >
-          <Badge count={itemCount} size="small">
+          <Badge count={itemCount} size="small" offset={[0, 2]}>
             <ShoppingCartOutlined style={{ fontSize: 20 }} />
           </Badge>
         </button>
@@ -57,6 +65,7 @@ export const Header: React.FC = () => {
             >
               {getInitials(user?.name ?? '')}
             </div>
+
             <button
               className="header__action-btn"
               onClick={logout}

@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import { Alert } from 'antd';
+import { EyeOutlined, EyeInvisibleOutlined } from '@ant-design/icons';
 import { useAuth } from '../../context/AuthContext';
 import type { LoginCredentials } from '../../types/auth';
 import '../AuthForms.scss';
@@ -13,6 +14,7 @@ export const LoginForm: React.FC<LoginFormProps> = ({ onSwitchToRegister }) => {
   const [form, setForm] = useState<LoginCredentials>({ email: '', password: '' });
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState<string | null>(null);
+  const [showPassword, setShowPassword] = useState(false);
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -20,7 +22,10 @@ export const LoginForm: React.FC<LoginFormProps> = ({ onSwitchToRegister }) => {
     setError(null);
 
     try {
-      await login(form);
+      await login({
+        email: form.email.trim(),
+        password: form.password,
+      });
     } catch {
       setError('Correo o contraseña incorrectos');
     } finally {
@@ -41,27 +46,48 @@ export const LoginForm: React.FC<LoginFormProps> = ({ onSwitchToRegister }) => {
 
       <form onSubmit={handleSubmit} className="auth-form__body">
         <div className="auth-form__field">
-          <label className="auth-form__label">Correo electrónico</label>
+          <label htmlFor="login-email" className="auth-form__label">
+            Correo electrónico
+          </label>
           <input
+            id="login-email"
             type="email"
             className="auth-form__input"
             placeholder="correo@ejemplo.com"
             value={form.email}
             onChange={e => setForm({ ...form, email: e.target.value })}
             required
+            autoComplete="email"
           />
         </div>
 
         <div className="auth-form__field">
-          <label className="auth-form__label">Contraseña</label>
-          <input
-            type="password"
-            className="auth-form__input"
-            placeholder="••••••••"
-            value={form.password}
-            onChange={e => setForm({ ...form, password: e.target.value })}
-            required
-          />
+          <label htmlFor="login-password" className="auth-form__label">
+            Contraseña
+          </label>
+
+          <div className="auth-form__password-wrap">
+            <input
+              id="login-password"
+              type={showPassword ? 'text' : 'password'}
+              className="auth-form__input"
+              placeholder="••••••••"
+              value={form.password}
+              onChange={e => setForm({ ...form, password: e.target.value })}
+              required
+              autoComplete="current-password"
+            />
+
+            <button
+              type="button"
+              className="auth-form__password-toggle"
+              onClick={() => setShowPassword(prev => !prev)}
+              aria-label={showPassword ? 'Ocultar contraseña' : 'Mostrar contraseña'}
+              aria-pressed={showPassword}
+            >
+              {showPassword ? <EyeInvisibleOutlined /> : <EyeOutlined />}
+            </button>
+          </div>
         </div>
 
         <button type="submit" className="auth-form__btn" disabled={loading}>

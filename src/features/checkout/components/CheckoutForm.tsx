@@ -16,27 +16,72 @@ export const CheckoutForm: React.FC<CheckoutFormProps> = ({ onSubmit, loading })
     shipping_city: '',
     shipping_notes: '',
   });
+
   const [error, setError] = useState<string | null>(null);
+  const [phoneError, setPhoneError] = useState<string | null>(null);
+
+  const validatePhone = (value: string) => {
+    const digits = value.replace(/\D/g, '');
+
+    if (!digits) return 'El número de teléfono es obligatorio.';
+    if (!/^\d{8}$/.test(digits)) return 'El número debe tener exactamente 8 dígitos.';
+    return null;
+  };
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     setError(null);
+
+    const cleanedPhone = form.shipping_phone.replace(/\D/g, '');
+    const phoneValidationError = validatePhone(cleanedPhone);
+
+    if (phoneValidationError) {
+      setPhoneError(phoneValidationError);
+      return;
+    }
+
+    setPhoneError(null);
+
     try {
-      await onSubmit(form);
+      await onSubmit({
+        ...form,
+        shipping_phone: cleanedPhone,
+      });
     } catch {
       setError('No se pudo procesar el pedido. Intenta de nuevo.');
     }
   };
 
-  const handleChange = (field: keyof ShippingData) =>
-    (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) =>
-      setForm({ ...form, [field]: e.target.value });
+  const handleChange =
+    (field: keyof ShippingData) =>
+    (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
+      let value = e.target.value;
+
+      if (field === 'shipping_phone') {
+        value = value.replace(/\D/g, '').slice(0, 8);
+        if (phoneError) {
+          setPhoneError(validatePhone(value));
+        }
+      }
+
+      setForm((prev) => ({
+        ...prev,
+        [field]: value,
+      }));
+    };
 
   return (
     <form className="checkout-form" onSubmit={handleSubmit}>
       <h2 className="checkout-form__title">Datos de envío</h2>
 
-      {error && <Alert type="error" message={error} showIcon style={{ marginBottom: 16 }} />}
+      {error && (
+        <Alert
+          type="error"
+          message={error}
+          showIcon
+          style={{ marginBottom: 16 }}
+        />
+      )}
 
       <div className="checkout-form__grid">
         <div className="checkout-form__field">
@@ -54,13 +99,19 @@ export const CheckoutForm: React.FC<CheckoutFormProps> = ({ onSubmit, loading })
         <div className="checkout-form__field">
           <label className="checkout-form__label">Teléfono</label>
           <input
-            className="checkout-form__input"
+            className={`checkout-form__input ${phoneError ? 'checkout-form__input--error' : ''}`}
             type="tel"
+            inputMode="numeric"
+            pattern="\d{8}"
+            maxLength={8}
             placeholder="88887777"
             value={form.shipping_phone}
             onChange={handleChange('shipping_phone')}
             required
           />
+          {phoneError && (
+            <span className="checkout-form__error">{phoneError}</span>
+          )}
         </div>
 
         <div className="checkout-form__field checkout-form__field--full">
@@ -88,7 +139,9 @@ export const CheckoutForm: React.FC<CheckoutFormProps> = ({ onSubmit, loading })
         </div>
 
         <div className="checkout-form__field checkout-form__field--full">
-          <label className="checkout-form__label">Notas adicionales <span>(opcional)</span></label>
+          <label className="checkout-form__label">
+            Notas adicionales <span>(opcional)</span>
+          </label>
           <textarea
             className="checkout-form__input checkout-form__textarea"
             placeholder="Instrucciones especiales para la entrega..."

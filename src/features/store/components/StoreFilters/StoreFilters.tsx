@@ -5,43 +5,53 @@ import './StoreFilters.scss';
 
 interface StoreFiltersProps {
   search: string;
-  priceRange: [number, number];
+  maxPrice: number | null;
   sort: StoreSortOption;
-  categories: Category[];           
-  selectedCategory?: number;       
+  categories: Category[];
+  selectedCategory?: number;
   onSearchChange: (value: string) => void;
-  onPriceRangeChange: (value: [number, number]) => void;
+  onMaxPriceChange: (value: number | null) => void;
   onSortChange: (value: StoreSortOption) => void;
-  onCategoryChange: (id?: number) => void; 
+  onCategoryChange: (id?: number) => void;
   onClear: () => void;
 }
 
-export const StoreFilters: React.FC<StoreFiltersProps> = ({ priceRange, onPriceRangeChange, onClear, categories, selectedCategory, onCategoryChange,
-}) => { 
+export const StoreFilters: React.FC<StoreFiltersProps> = ({
+  maxPrice,
+  onMaxPriceChange,
+  onClear,
+  categories,
+  selectedCategory,
+  onCategoryChange,
+}) => {
   const MIN = 0;
-  const MAX = 100000000;
+  const MAX = 6683150;
+  const STEP = 50;
 
-  const handleMin = (e: React.ChangeEvent<HTMLInputElement>) => {
-    const val = Math.min(Number(e.target.value), priceRange[1] - 50);
-    onPriceRangeChange([val, priceRange[1]]);
+  const isPriceActive = maxPrice !== null;
+  const sliderValue = maxPrice ?? MIN;
+  const fillPct = ((sliderValue - MIN) / (MAX - MIN)) * 100;
+
+  const handlePriceChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const value = Number(e.target.value);
+
+    if (value <= MIN) {
+      onMaxPriceChange(null);
+      return;
+    }
+
+    onMaxPriceChange(value);
   };
-
-  const handleMax = (e: React.ChangeEvent<HTMLInputElement>) => {
-    const val = Math.max(Number(e.target.value), priceRange[0] + 50);
-    onPriceRangeChange([priceRange[0], val]);
-  };
-
-  const minPct = ((priceRange[0] - MIN) / (MAX - MIN)) * 100;
-  const maxPct = ((priceRange[1] - MIN) / (MAX - MIN)) * 100;
 
   return (
     <div className="filters">
       <div className="filters__header">
         <h3 className="filters__title">Filtros</h3>
-        <button className="filters__clear" onClick={onClear}>Limpiar</button>
+        <button className="filters__clear" onClick={onClear} type="button">
+          Limpiar
+        </button>
       </div>
 
-      {/* ── Categorías ── */}
       <div className="filters__section">
         <h4 className="filters__label">Categorías</h4>
         <ul className="filters__categories">
@@ -51,6 +61,7 @@ export const StoreFilters: React.FC<StoreFiltersProps> = ({ priceRange, onPriceR
           >
             Todas
           </li>
+
           {categories.map((cat) => (
             <li
               key={cat.id}
@@ -63,41 +74,33 @@ export const StoreFilters: React.FC<StoreFiltersProps> = ({ priceRange, onPriceR
         </ul>
       </div>
 
-      {/* ── Rango de precios ── */}
       <div className="filters__section">
-        <h4 className="filters__label">Rango de Precios</h4>
+        <h4 className="filters__label">Precio máximo</h4>
+
         <div className="filters__range">
-          <div
-            className="filters__range-track"
-            style={{
-              background: `linear-gradient(to right,
-                #e5e7eb ${minPct}%,
-                #2563eb ${minPct}%,
-                #2563eb ${maxPct}%,
-                #e5e7eb ${maxPct}%)`,
-            }}
-          >
-            <input
-              type="range" min={MIN} max={MAX} step={50}
-              value={priceRange[0]}
-              onChange={handleMin}
-              className="filters__range-input"
+          <div className="filters__range-track">
+            <div
+              className={`filters__range-fill ${isPriceActive ? 'is-active' : ''}`}
+              style={{ width: `${fillPct}%` }}
             />
+
             <input
-              type="range" min={MIN} max={MAX} step={50}
-              value={priceRange[1]}
-              onChange={handleMax}
-              className="filters__range-input"
+              type="range"
+              min={MIN}
+              max={MAX}
+              step={STEP}
+              value={sliderValue}
+              onChange={handlePriceChange}
+              className="filters__range-input filters__range-input--single"
             />
           </div>
-          <div className="filters__range-labels">
-            <span>₡{priceRange[0].toLocaleString('es-CR')}</span>
-            <span>₡{priceRange[1].toLocaleString('es-CR')}</span>
+
+          <div className={`filters__range-labels ${isPriceActive ? 'is-active' : ''}`}>
+            <span>{isPriceActive ? `Hasta ₡${sliderValue.toLocaleString('es-CR')}` : 'Todos los precios'}</span>
+            <span>₡{MAX.toLocaleString('es-CR')}</span>
           </div>
         </div>
       </div>
-
-      <button className="filters__apply">Aplicar Filtros</button>
     </div>
   );
 };

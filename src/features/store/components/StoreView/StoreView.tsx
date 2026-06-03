@@ -9,10 +9,19 @@ import './StoreView.scss';
 
 export const StoreView: React.FC = () => {
   const {
-    filteredProducts, loading, error,
-    search, priceRange, sort, selectedCategory,
-    setSearch, setPriceRange, setSort, setSelectedCategory,
-    clearFilters, loadProducts,
+    filteredProducts,
+    loading,
+    error,
+    search,
+    maxPrice,
+    sort,
+    selectedCategory,
+    setSearch,
+    setMaxPrice,
+    setSort,
+    setSelectedCategory,
+    clearFilters,
+    loadProducts,
   } = useStoreProducts();
 
   const [categories, setCategories] = useState<Category[]>([]);
@@ -31,12 +40,12 @@ export const StoreView: React.FC = () => {
       <aside className="store-sidebar">
         <StoreFilters
           search={search}
-          priceRange={priceRange}
+          maxPrice={maxPrice}
           sort={sort}
           categories={categories}
           selectedCategory={selectedCategory}
           onSearchChange={setSearch}
-          onPriceRangeChange={setPriceRange}
+          onMaxPriceChange={setMaxPrice}
           onSortChange={setSort}
           onCategoryChange={setSelectedCategory}
           onClear={handleClear}
@@ -57,6 +66,7 @@ export const StoreView: React.FC = () => {
           <p className="store-content__count">
             Mostrando <strong>{filteredProducts.length}</strong> productos
           </p>
+
           <div className="store-content__sort">
             <span>Ordenar por:</span>
             <select value={sort} onChange={(e) => setSort(e.target.value as any)}>
@@ -82,16 +92,27 @@ export const StoreView: React.FC = () => {
           </div>
         ) : filteredProducts.length === 0 ? (
           <div className="store-empty">
-            <svg width="48" height="48" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5">
-              <circle cx="11" cy="11" r="8"/><path d="m21 21-4.35-4.35"/>
+            <svg
+              width="48"
+              height="48"
+              viewBox="0 0 24 24"
+              fill="none"
+              stroke="currentColor"
+              strokeWidth="1.5"
+            >
+              <circle cx="11" cy="11" r="8" />
+              <path d="m21 21-4.35-4.35" />
             </svg>
+
             <h3>Sin resultados</h3>
             <p>Intenta con otros filtros o busca algo diferente</p>
-            <button className="store-empty__btn" onClick={handleClear}>Limpiar filtros</button>
+            <button className="store-empty__btn" onClick={handleClear}>
+              Limpiar filtros
+            </button>
           </div>
         ) : (
           <div className="store-grid">
-            {filteredProducts.map(product => (
+            {filteredProducts.map((product) => (
               <StoreCard key={product.id} product={product} />
             ))}
           </div>

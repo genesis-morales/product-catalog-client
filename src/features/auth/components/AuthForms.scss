@@ -1,6 +1,39 @@
 .auth-form {
-  width: 100%;
-  max-width: 420px;
+  &__password-wrap {
+    position: relative;
+    width: 100%;
+  }
+
+  &__password-wrap .auth-form__input {
+    padding-right: 44px;
+  }
+
+  &__password-toggle {
+    position: absolute;
+    top: 0;
+    right: 12px;
+    height: 100%;
+    width: 24px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border: none;
+    background: transparent;
+    color: #6b7280;
+    cursor: pointer;
+    padding: 0;
+    font-size: 18px;
+    line-height: 1;
+
+    &:hover {
+      color: #2563eb;
+    }
+
+    &:focus-visible {
+      outline: none;
+      color: #2563eb;
+    }
+  }
 
   &__header {
     margin-bottom: 24px;
@@ -39,19 +72,46 @@
   }
 
   &__input {
-    height: 42px;
-    padding: 0 14px;
-    border: 1.5px solid #e5e7eb;
-    border-radius: 8px;
-    font-size: 14px;
-    color: #111827;
-    background: #fff;
-    outline: none;
-    transition: border-color 0.15s;
+  width: 100%;
+  height: 42px;
+  padding: 0 14px;
+  border: 1.5px solid #e5e7eb;
+  border-radius: 8px;
+  font-size: 14px;
+  color: #111827;
+  background: #fff;
+  outline: none;
+  transition: border-color 0.15s, box-shadow 0.15s;
 
-    &::placeholder { color: #9ca3af; }
-    &:focus { border-color: #2563eb; }
-    &:disabled { background: #f9fafb; color: #9ca3af; }
+    &::placeholder {
+      color: #9ca3af;
+    }
+
+    &:focus {
+      border-color: #2563eb;
+      box-shadow: 0 0 0 3px rgba(37, 99, 235, 0.12);
+    }
+
+    &:disabled {
+      background: #f9fafb;
+      color: #9ca3af;
+    }
+
+    &--error {
+      border-color: #dc2626;
+
+      &:focus {
+        border-color: #dc2626;
+        box-shadow: 0 0 0 3px rgba(220, 38, 38, 0.12);
+      }
+    }
+  }
+
+  &__error {
+    display: block;
+    margin-top: 2px;
+    font-size: 13px;
+    color: #dc2626;
   }
 
   &__btn {
@@ -67,9 +127,18 @@
     cursor: pointer;
     transition: background 0.15s;
 
-    &:hover:not(:disabled) { background: #1d4ed8; }
-    &:active:not(:disabled) { background: #1e40af; }
-    &:disabled { opacity: 0.6; cursor: not-allowed; }
+    &:hover:not(:disabled) {
+      background: #1d4ed8;
+    }
+
+    &:active:not(:disabled) {
+      background: #1e40af;
+    }
+
+    &:disabled {
+      opacity: 0.6;
+      cursor: not-allowed;
+    }
   }
 
   &__switch {
@@ -88,6 +157,8 @@
     cursor: pointer;
     padding: 0;
 
-    &:hover { text-decoration: underline; }
+    &:hover {
+      text-decoration: underline;
+    }
   }
 }
