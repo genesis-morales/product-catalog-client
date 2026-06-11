@@ -7,6 +7,7 @@ import './index.css'
 import App from './App.tsx'
 import { CartProvider } from './features/cart/context/CartContext'
 import { AuthProvider } from './features/auth/context/AuthContext'
+import './styles/responsive.css';
 
 createRoot(document.getElementById('root')!).render(
   <StrictMode>

@@ -1,0 +1,185 @@
+/* Reset base */
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+
+html,
+body,
+#root {
+  width: 100%;
+  min-height: 100%;
+  overflow-x: hidden;
+}
+
+img,
+svg,
+video,
+canvas {
+  max-width: 100%;
+  height: auto;
+}
+
+/* Evita desbordes comunes en flex/grid */
+.ant-layout,
+.ant-layout-content,
+.ant-row,
+.ant-col,
+[class*='page'],
+[class*='wrapper'],
+[class*='container'],
+[class*='content'] {
+  min-width: 0;
+}
+
+/* Contenedor general reutilizable */
+.page-container {
+  width: 100%;
+  max-width: 1400px;
+  margin: 0 auto;
+  padding-inline: 16px;
+}
+
+/* Tipografía y espacios fluidos básicos */
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+  overflow-wrap: break-word;
+}
+
+p,
+span,
+a,
+button,
+label {
+  overflow-wrap: break-word;
+}
+
+/* Tablas AntD */
+.ant-table-wrapper {
+  width: 100%;
+  overflow-x: auto;
+}
+
+.ant-table {
+  min-width: 700px;
+}
+
+.ant-table-cell {
+  white-space: nowrap;
+}
+
+/* Formularios */
+.ant-form-item {
+  margin-bottom: 16px;
+}
+
+.ant-input,
+.ant-input-affix-wrapper,
+.ant-select-selector,
+.ant-picker,
+.ant-btn {
+  min-height: 40px;
+}
+
+/* Modales y drawers */
+.ant-modal-root .ant-modal-wrap {
+  padding: 16px;
+}
+
+.ant-modal {
+  max-width: calc(100vw - 32px);
+}
+
+.ant-modal-content {
+  overflow: hidden;
+}
+
+.ant-drawer-content-wrapper {
+  max-width: 100vw;
+}
+
+/* Descriptions */
+.ant-descriptions {
+  width: 100%;
+  overflow-x: auto;
+}
+
+/* Utilidad general */
+.responsive-stack {
+  display: flex;
+  gap: 12px;
+  flex-wrap: wrap;
+}
+
+/* Tablets */
+@media (max-width: 992px) {
+  .page-container {
+    padding-inline: 12px;
+  }
+
+  .ant-card {
+    border-radius: 10px;
+  }
+
+  .ant-modal {
+    top: 24px;
+  }
+}
+
+/* Móvil */
+@media (max-width: 768px) {
+  .page-container {
+    padding-inline: 10px;
+  }
+
+  .ant-table {
+    min-width: 640px;
+  }
+
+  .ant-modal-root .ant-modal-wrap {
+    padding: 8px;
+  }
+
+  .ant-modal {
+    max-width: calc(100vw - 16px);
+    margin: 0;
+    top: 8px;
+  }
+
+  .ant-modal-content {
+    padding: 16px;
+  }
+
+  .ant-descriptions-bordered .ant-descriptions-view {
+    overflow-x: auto;
+  }
+
+  .responsive-stack {
+    flex-direction: column;
+    align-items: stretch;
+  }
+}
+
+/* Móvil pequeño */
+@media (max-width: 576px) {
+  .page-container {
+    padding-inline: 8px;
+  }
+
+  .ant-table {
+    min-width: 560px;
+  }
+
+  .ant-btn {
+    width: 100%;
+  }
+
+  .ant-space {
+    flex-wrap: wrap;
+  }
+}
