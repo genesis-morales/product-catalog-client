@@ -19,14 +19,24 @@ export const ProductManagement: React.FC = () => {
   const [deleteId, setDeleteId] = useState<number | null>(null);
   const [form] = Form.useForm();
 
-  // Hooks personalizados
-  const { products, loading, total, currentPage, pageSize, loadProducts, refetch } = useProducts();
+  const { products, loading, total, currentPage, pageSize, loadProducts, refetch } =
+    useProducts();
   const { categories, subcategories } = useCategories();
-  const { filters, filteredProducts, setSearch, setCategoryId, setAvailable, clearFilters } = useProductFilters(products);
-  const { imageUrl, fileList, filteredSubcategories, handleCategoryChange, handleUpload, handleSave, handleRemoveImage,
-    setInitialImage, resetForm, loading: formLoading, } = useProductForm();
+  const { filters, filteredProducts, setSearch, setCategoryId, setAvailable, clearFilters } =
+    useProductFilters(products);
+  const {
+    imageUrl,
+    fileList,
+    filteredSubcategories,
+    handleCategoryChange,
+    handleUpload,
+    handleSave,
+    handleRemoveImage,
+    setInitialImage,
+    resetForm,
+    loading: formLoading,
+  } = useProductForm();
 
-  // Handlers
   const handleAddProduct = useCallback(() => {
     setEditingProduct(null);
     form.resetFields();
@@ -34,14 +44,17 @@ export const ProductManagement: React.FC = () => {
     setDrawerOpen(true);
   }, [form, resetForm]);
 
-  const handleEditProduct = useCallback((record: Product) => {
-    setEditingProduct(record);
-    form.setFieldsValue(record);
-    if (record.img) {
-      setInitialImage(record.img);
-    }
-    setDrawerOpen(true);
-  }, [form, setInitialImage]);
+  const handleEditProduct = useCallback(
+    (record: Product) => {
+      setEditingProduct(record);
+      form.setFieldsValue(record);
+      if (record.img) {
+        setInitialImage(record.img);
+      }
+      setDrawerOpen(true);
+    },
+    [form, setInitialImage]
+  );
 
   const handleDeleteProduct = useCallback((id: number) => {
     setDeleteId(id);
@@ -63,40 +76,58 @@ export const ProductManagement: React.FC = () => {
     }
   }, [deleteId, refetch]);
 
-  const handleSaveProduct = useCallback(async (values: any) => {
-    await handleSave(values, editingProduct, async () => {
-      setDrawerOpen(false);
-      await refetch();
-    });
-  }, [handleSave, editingProduct, refetch]);
+  const handleSaveProduct = useCallback(
+    async (values: any) => {
+      await handleSave(values, editingProduct, async () => {
+        setDrawerOpen(false);
+        await refetch();
+      });
+    },
+    [handleSave, editingProduct, refetch]
+  );
 
-  const handleSearchChange = useCallback((value: string) => {
-    setSearch(value);
-  }, [setSearch]);
+  const handleSearchChange = useCallback(
+    (value: string) => {
+      setSearch(value);
+    },
+    [setSearch]
+  );
 
-  const handleCategoryFilterChange = useCallback((value?: number) => {
-    setCategoryId(value);
-  }, [setCategoryId]);
+  const handleCategoryFilterChange = useCallback(
+    (value?: number) => {
+      setCategoryId(value);
+    },
+    [setCategoryId]
+  );
 
-  const handleAvailableFilterChange = useCallback((value?: boolean | null) => {
-    setAvailable(value ?? null);
-  }, [setAvailable]);
+  const handleAvailableFilterChange = useCallback(
+    (value?: boolean | null) => {
+      setAvailable(value ?? null);
+    },
+    [setAvailable]
+  );
 
   const handleClearFilters = useCallback(() => {
     clearFilters();
   }, [clearFilters]);
 
-  const handleCategoryChangeWrapper = useCallback((categoryId: number) => {
-    handleCategoryChange(categoryId, subcategories);
-  }, [handleCategoryChange, subcategories]);
-
-  const handlePaginationChange = useCallback((page: number, size: number) => {
-    loadProducts(page, size);
-  }, [loadProducts]);
+  const handlePaginationChange = useCallback(
+    (page: number, size: number) => {
+      loadProducts(page, size);
+    },
+    [loadProducts]
+  );
 
   return (
     <div>
-      <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: 16 }}>
+      <div
+        style={{
+          display: 'flex',
+          justifyContent: 'space-between',
+          alignItems: 'center',
+          marginBottom: 16,
+        }}
+      >
         <div>
           <PageHeader
             title="Productos"
@@ -135,7 +166,6 @@ export const ProductManagement: React.FC = () => {
         }}
       />
 
-      {/* Drawer para agregar/editar */}
       <Drawer
         title={editingProduct ? 'Editar Producto' : 'Añadir Producto'}
         placement="right"
@@ -143,11 +173,7 @@ export const ProductManagement: React.FC = () => {
         open={drawerOpen}
         width={500}
       >
-        <Form
-          form={form}
-          layout="vertical"
-          onFinish={handleSaveProduct}
-        >
+        <Form form={form} layout="vertical" onFinish={handleSaveProduct}>
           <ProductForm
             form={form}
             editingProduct={editingProduct}
@@ -163,7 +189,6 @@ export const ProductManagement: React.FC = () => {
         </Form>
       </Drawer>
 
-      {/* Modal de confirmación de eliminación */}
       <Modal
         title="Confirmar eliminación"
         open={deleteModalOpen}

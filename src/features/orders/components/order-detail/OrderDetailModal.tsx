@@ -64,9 +64,7 @@ export const OrderDetailModal: React.FC<OrderDetailModalProps> = ({
         <Space>
           <span>Orden</span>
           <span className="orderNumberTitle">{order.order_number}</span>
-          <Tag color={STATUS_COLORS[order.status]}>
-            {statusLabel}
-          </Tag>
+          <Tag color={STATUS_COLORS[order.status]}>{statusLabel}</Tag>
         </Space>
       }
       open={open}
@@ -76,9 +74,7 @@ export const OrderDetailModal: React.FC<OrderDetailModalProps> = ({
     >
       <Descriptions title="Datos de la orden" column={2} size="small" bordered>
         <Descriptions.Item label="Estado">
-          <Tag color={STATUS_COLORS[order.status]}>
-            {statusLabel}
-          </Tag>
+          <Tag color={STATUS_COLORS[order.status]}>{statusLabel}</Tag>
         </Descriptions.Item>
         <Descriptions.Item label="Número de orden">
           {order.order_number}

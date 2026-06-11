@@ -10,17 +10,31 @@ import './OrderManagement.scss';
 
 const OrderManagementContent: React.FC = () => {
   const {
-    filteredOrders, filters, loading, total, currentPage, pageSize,
-    loadOrders, setSearch, setStatus, clearFilters,
-    selectedOrder, modalOpen, openDetail, closeDetail, updateOrderStatus,
+    filteredOrders,
+    filters,
+    loading,
+    total,
+    currentPage,
+    pageSize,
+    loadOrders,
+    setSearch,
+    setStatus,
+    clearFilters,
+    selectedOrder,
+    modalOpen,
+    openDetail,
+    closeDetail,
   } = useOrderContext();
 
   const [editingOrder, setEditingOrder] = useState<Order | null>(null);
   const [editModalOpen, setEditModalOpen] = useState(false);
 
-  const handlePaginationChange = useCallback((page: number, size: number) => {
-    loadOrders(page, size);
-  }, [loadOrders]);
+  const handlePaginationChange = useCallback(
+    (page: number, size: number) => {
+      loadOrders(page, size);
+    },
+    [loadOrders]
+  );
 
   const handleEdit = useCallback((order: Order) => {
     setEditingOrder(order);
@@ -67,7 +81,6 @@ const OrderManagementContent: React.FC = () => {
         order={selectedOrder}
         open={modalOpen}
         onClose={closeDetail}
-        onStatusUpdated={updateOrderStatus}
       />
 
       <OrderEditModal

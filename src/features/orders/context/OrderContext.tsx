@@ -45,7 +45,7 @@ export const OrderProvider: React.FC<{ children: React.ReactNode }> = ({ childre
   }, []);
 
   const updateOrderStatus = useCallback(async (id: number, status: OrderStatus) => {
-    const updated = await OrderService.updateStatus(id, status);
+const updated = await OrderService.updateOrderStatus(id, status);
     setSelectedOrder((prev) => (prev?.id === id ? { ...prev, status: updated.status } : prev));
     await refetch();
   }, [refetch]);
